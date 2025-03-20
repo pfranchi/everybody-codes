@@ -1,16 +1,11 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
-import challenges.interfaces.Quest10;
 import challenges.interfaces.Quest16;
 import challenges.params.ExecutionParameters;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import com.google.common.math.BigIntegerMath;
-import com.google.common.primitives.Ints;
-import com.google.common.primitives.Longs;
-import org.apache.commons.math3.util.MathUtils;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -18,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EC2024Quest16 extends Quest implements ECEvent2024, Quest16 {
+public class EC2024Quest16 extends AbstractQuest implements ECEvent2024, Quest16 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

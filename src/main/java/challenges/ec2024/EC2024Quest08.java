@@ -1,6 +1,6 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
 import challenges.interfaces.Quest08;
 import challenges.params.ExecutionParameters;
@@ -8,7 +8,7 @@ import challenges.params.GenericExecutionParameter;
 
 import java.util.List;
 
-public class EC2024Quest08 extends Quest implements ECEvent2024, Quest08 {
+public class EC2024Quest08 extends AbstractQuest implements ECEvent2024, Quest08 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

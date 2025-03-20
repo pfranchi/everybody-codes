@@ -19,14 +19,14 @@ class EC2024Quest20Test {
     @Order(1)
     void part1Examples() {
         List<String> actualResults = solution.executeExamples(1);
-        List<String> expectedResults = Collections.singletonList("Not implemented");
+        List<String> expectedResults = Collections.singletonList("1045");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(2)
     void part1() {
-        assertEquals("Not implemented", solution.executePart1());
+        assertEquals("1038", solution.executePart1());
     }
 
     @Test

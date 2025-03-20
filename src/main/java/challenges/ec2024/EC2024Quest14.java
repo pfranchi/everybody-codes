@@ -1,8 +1,7 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
-import challenges.interfaces.Quest10;
 import challenges.interfaces.Quest14;
 import challenges.params.ExecutionParameters;
 import com.google.common.graph.GraphBuilder;
@@ -15,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class EC2024Quest14 extends Quest implements ECEvent2024, Quest14 {
+public class EC2024Quest14 extends AbstractQuest implements ECEvent2024, Quest14 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

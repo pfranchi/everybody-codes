@@ -1,6 +1,6 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
 import challenges.interfaces.Quest07;
 import challenges.params.ExecutionParameters;
@@ -21,7 +21,7 @@ import java.util.function.UnaryOperator;
 import static challenges.ec2024.EC2024Quest07.Action.*;
 import static challenges.ec2024.EC2024Quest07.TrackAction.*;
 
-public class EC2024Quest07 extends Quest implements ECEvent2024, Quest07 {
+public class EC2024Quest07 extends AbstractQuest implements ECEvent2024, Quest07 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

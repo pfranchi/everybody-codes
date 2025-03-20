@@ -1,15 +1,14 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
-import challenges.interfaces.Quest10;
 import challenges.interfaces.Quest12;
 import challenges.params.ExecutionParameters;
 import common.geo.*;
 
 import java.util.*;
 
-public class EC2024Quest12 extends Quest implements ECEvent2024, Quest12 {
+public class EC2024Quest12 extends AbstractQuest implements ECEvent2024, Quest12 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

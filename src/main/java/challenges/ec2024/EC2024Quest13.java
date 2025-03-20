@@ -1,24 +1,19 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
-import challenges.interfaces.Quest10;
 import challenges.interfaces.Quest13;
 import challenges.params.ExecutionParameters;
-import com.sun.jdi.Value;
 import common.Grids;
-import common.Strings;
 import common.geo.CardinalDirection2D;
-import common.geo.Cell2D;
 import common.geo.ImmutableCell2D;
-import common.geo.ImmutableCoordinate2D;
 import common.pathfinding.PathFindingAlgorithms;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.ToIntBiFunction;
 
-public class EC2024Quest13 extends Quest implements ECEvent2024, Quest13 {
+public class EC2024Quest13 extends AbstractQuest implements ECEvent2024, Quest13 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

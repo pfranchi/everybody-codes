@@ -19,42 +19,44 @@ class EC2024Quest17Test {
     @Order(1)
     void part1Examples() {
         List<String> actualResults = solution.executeExamples(1);
-        List<String> expectedResults = Collections.singletonList("Not implemented");
+        List<String> expectedResults = Collections.singletonList("16");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(2)
     void part1() {
-        assertEquals("Not implemented", solution.executePart1());
+        assertEquals("138", solution.executePart1());
     }
 
     @Test
     @Order(3)
     void part2Examples() {
         List<String> actualResults = solution.executeExamples(2);
-        List<String> expectedResults = Collections.singletonList("Not implemented");
+        List<String> expectedResults = Collections.singletonList("16");
         assertEquals(expectedResults, actualResults);
     }
 
+    // Takes about 5 seconds
     @Test
     @Order(4)
     void part2() {
-        assertEquals("Not implemented", solution.executePart2());
+        assertEquals("1287", solution.executePart2());
     }
 
     @Test
     @Order(5)
     void part3Examples() {
         List<String> actualResults = solution.executeExamples(3);
-        List<String> expectedResults = Collections.singletonList("Not implemented");
+        List<String> expectedResults = Collections.singletonList("15624");
         assertEquals(expectedResults, actualResults);
     }
 
+    // Takes about 3 seconds
     @Test
     @Order(6)
     void part3() {
-        assertEquals("Not implemented", solution.executePart3());
+        assertEquals("4196767476", solution.executePart3());
     }
 
 

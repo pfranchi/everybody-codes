@@ -1,19 +1,14 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
 import challenges.interfaces.Quest04;
 import challenges.params.ExecutionParameters;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.*;
-import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 
-public class EC2024Quest04 extends Quest implements ECEvent2024, Quest04 {
+public class EC2024Quest04 extends AbstractQuest implements ECEvent2024, Quest04 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

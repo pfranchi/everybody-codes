@@ -1,14 +1,12 @@
 package challenges.ec2024;
 
-import challenges.Quest;
+import challenges.AbstractQuest;
 import challenges.interfaces.ECEvent2024;
-import challenges.interfaces.Quest10;
 import challenges.interfaces.Quest15;
 import challenges.params.ExecutionParameters;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ListMultimap;
-import common.Grids;
 import common.VisualSolutions;
 import common.geo.Cell2D;
 import common.geo.ImmutableCell2D;
@@ -17,7 +15,7 @@ import common.pathfinding.PathFinder;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class EC2024Quest15 extends Quest implements ECEvent2024, Quest15 {
+public class EC2024Quest15 extends AbstractQuest implements ECEvent2024, Quest15 {
 
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {

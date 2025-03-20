@@ -1,6 +1,7 @@
 package challenges;
 
 import challenges.interfaces.ECEvent;
+import challenges.interfaces.Quest;
 import challenges.params.ExecutionParameters;
 import common.Strings;
 import fetch.*;
@@ -16,7 +17,7 @@ import java.util.function.UnaryOperator;
 import static java.util.concurrent.TimeUnit.*;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-public abstract class Quest implements ECEvent, challenges.interfaces.Quest {
+public abstract class AbstractQuest implements ECEvent, Quest {
 
     private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -26,7 +27,7 @@ public abstract class Quest implements ECEvent, challenges.interfaces.Quest {
 
     protected static final String VISUAL_SOLUTION = "Visual solution";
 
-    // Implementations of parts 1 and 2
+    // Implementations of parts 1, 2 and 3
 
     protected String solvePart1(String input, ExecutionParameters executionParameters) {
         return solvePart1(input, Strings.splitByRow(input), executionParameters);
