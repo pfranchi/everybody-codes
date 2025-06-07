@@ -7,6 +7,8 @@ import java.nio.file.Path;
 
 public class SetUpNewYearApp {
 
+    private enum Type {MAIN_EVENT, STORY}
+
     public static void main(String[] args) {
 
         int year = 2026;

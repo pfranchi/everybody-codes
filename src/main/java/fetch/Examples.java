@@ -18,7 +18,8 @@ public final class Examples {
 
         String formattedQuestNumber = String.format("%02d", puzzleId.questNumber());
         Path folderPath = Path.of(
-                "src/main/resources/examples/" + puzzleId.ecEvent() + "/quest" + formattedQuestNumber + "/part" + puzzleId.part()
+                "src/main/resources/examples/" + puzzleId.getResourcesRootDirectoryName()
+                        + "/quest" + formattedQuestNumber + "/part" + puzzleId.part()
         );
 
         if (Files.notExists(folderPath)) {

@@ -6,9 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,15 +28,18 @@ public final class Inputs {
         }
 
         // If the date is in the future, the puzzle is not available
-        int year = puzzleId.ecEvent();
+        //int year = puzzleId.ecEvent();
         int day = puzzleId.questNumber();
 
-        LocalDate target = LocalDate.of(year, Month.NOVEMBER, day);
+        //LocalDate target = LocalDate.of(year, Month.NOVEMBER, day);
         LocalDateTime now = LocalDateTime.now();
 
+        /*
         if (now.isBefore(target.atStartOfDay())) {
             throw new PuzzleNotAvailableException();
         }
+
+         */
 
         // Fetch and put in local cache
         String input;
@@ -55,7 +56,7 @@ public final class Inputs {
 
     private static String fetchNotInLocalCache(PuzzleId puzzleId) throws IOException, InterruptedException {
 
-        Path filePath = Path.of("src/main/resources/inputs/" + puzzleId.ecEvent() + "/quest"
+        Path filePath = Path.of("src/main/resources/inputs/" + puzzleId.getResourcesRootDirectoryName() + "/quest"
                 + String.format("%02d", puzzleId.questNumber()) + "/part" + puzzleId.part() + ".txt");
         Path folderPath = filePath.getParent();
 
