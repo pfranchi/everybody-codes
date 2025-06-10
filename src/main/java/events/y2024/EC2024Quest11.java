@@ -2,7 +2,7 @@ package events.y2024;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.stats.LongMinMaxStatistics;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest11;

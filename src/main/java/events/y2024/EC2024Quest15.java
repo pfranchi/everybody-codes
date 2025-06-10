@@ -7,7 +7,7 @@ import common.VisualSolutions;
 import common.geo.Cell2D;
 import common.geo.ImmutableCell2D;
 import common.pathfinding.PathFinder;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest15;
 import common.support.params.ExecutionParameters;

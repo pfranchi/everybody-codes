@@ -1,4 +1,4 @@
-package fetch;
+package automation;
 
 import java.io.IOException;
 import java.nio.file.Files;

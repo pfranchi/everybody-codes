@@ -1,5 +1,6 @@
 package events.y2024;
 
+import common.AbstractQuestTest;
 import org.junit.jupiter.api.*;
 
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-class EC2024Quest15Test {
+class EC2024Quest15Test extends AbstractQuestTest {
 
     private static final EC2024Quest15 solution = new EC2024Quest15();
 
@@ -23,7 +24,7 @@ class EC2024Quest15Test {
     @Test
     @Order(2)
     void part1() {
-        assertEquals("184", solution.executePart1());
+        executeQuest(solution, 1, "184");
     }
 
     @Test
@@ -38,7 +39,7 @@ class EC2024Quest15Test {
     @Disabled("Implementation too slow")
     @Order(4)
     void part2() {
-        assertEquals("512", solution.executePart2());
+        executeQuest(solution, 2, "512");
     }
 
     @Test
@@ -49,10 +50,11 @@ class EC2024Quest15Test {
         assertEquals(expectedResults, actualResults);
     }
 
+    @Disabled("Not implemented")
     @Test
     @Order(6)
     void part3() {
-        assertEquals("Not implemented", solution.executePart3());
+        executeQuest(solution, 3, "Not implemented");
     }
 
 

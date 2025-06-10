@@ -1,5 +1,6 @@
 package events.y2024;
 
+import common.AbstractQuestTest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-class EC2024Quest06Test {
+class EC2024Quest06Test extends AbstractQuestTest {
 
     private static final EC2024Quest06 solution = new EC2024Quest06();
 
@@ -26,7 +27,7 @@ class EC2024Quest06Test {
     @Test
     @Order(2)
     void part1() {
-        assertEquals("RRHCZGCVCNRV@", solution.executePart1());
+        executeQuest(solution, 1, "RRHCZGCVCNRV@");
     }
 
     @Test
@@ -40,7 +41,7 @@ class EC2024Quest06Test {
     @Test
     @Order(4)
     void part2() {
-        assertEquals("RZBZFSCKCX@", solution.executePart2());
+        executeQuest(solution, 2, "RZBZFSCKCX@");
     }
 
     @Test
@@ -54,7 +55,7 @@ class EC2024Quest06Test {
     @Test
     @Order(6)
     void part3() {
-        assertEquals("Not implemented", solution.executePart3());
+        executeQuest(solution, 3, "RZHKTSNDCLLP@");
     }
 
 

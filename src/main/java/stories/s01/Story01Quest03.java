@@ -1,7 +1,7 @@
 package stories.s01;
 
 import com.google.common.collect.Sets;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.Quest03;
 import common.support.interfaces.Story01;
 import common.support.params.ExecutionParameters;

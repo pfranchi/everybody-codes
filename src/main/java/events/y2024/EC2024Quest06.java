@@ -5,7 +5,7 @@ import com.google.common.collect.Multiset;
 import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.ImmutableGraph;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest06;
 import common.support.params.ExecutionParameters;

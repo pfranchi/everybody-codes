@@ -1,6 +1,6 @@
 package stories.s01;
 
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.Quest01;
 import common.support.interfaces.Story01;
 import common.support.params.ExecutionParameters;

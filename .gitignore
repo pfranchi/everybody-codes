@@ -27,6 +27,7 @@ replay_pid*
 .idea/
 *.iml
 target
+src/main/resources/seed.txt
 src/main/resources/sessionCookie.txt
 src/main/resources/inputs
 src/main/resources/misc

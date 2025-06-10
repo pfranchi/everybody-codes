@@ -1,5 +1,6 @@
 package stories.s01;
 
+import common.AbstractQuestTest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-class Story01Quest03Test {
+class Story01Quest03Test extends AbstractQuestTest {
 
     private static final Story01Quest03 solution = new Story01Quest03();
 
@@ -25,7 +26,7 @@ class Story01Quest03Test {
     @Test
     @Order(2)
     void part1() {
-        assertEquals("4537", solution.executePart1());
+        executeQuest(solution, 1, "4537");
     }
 
     @Test
@@ -39,7 +40,7 @@ class Story01Quest03Test {
     @Test
     @Order(4)
     void part2() {
-        assertEquals("1067656", solution.executePart2());
+        executeQuest(solution, 2, "1067656");
     }
 
     @Test
@@ -53,7 +54,7 @@ class Story01Quest03Test {
     @Test
     @Order(6)
     void part3() {
-        assertEquals("98473309101", solution.executePart3());
+        executeQuest(solution, 3, "98473309101");
     }
 
 

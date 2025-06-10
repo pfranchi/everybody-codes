@@ -2,7 +2,7 @@ package events.y2024;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest05;
 import common.support.params.ExecutionParameters;

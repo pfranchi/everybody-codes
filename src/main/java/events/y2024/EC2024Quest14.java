@@ -6,7 +6,7 @@ import common.geo.CardinalDirection3D;
 import common.geo.ImmutableCoordinate3D;
 import common.geo.MutableCoordinate3D;
 import common.pathfinding.PathFinder;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest14;
 import common.support.params.ExecutionParameters;

@@ -1,4 +1,4 @@
-package fetch;
+package automation;
 
 public record EventId(EventType type, int number) {
 

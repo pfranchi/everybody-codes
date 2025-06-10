@@ -1,7 +1,7 @@
 package common.support.interfaces;
 
-import fetch.EventId;
-import fetch.EventType;
+import automation.EventId;
+import automation.EventType;
 
 public interface MainEvent extends Event {
 

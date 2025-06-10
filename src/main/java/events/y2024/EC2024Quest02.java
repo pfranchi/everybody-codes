@@ -1,6 +1,6 @@
 package events.y2024;
 
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest02;
 import common.support.params.ExecutionParameters;
@@ -68,26 +68,6 @@ public class EC2024Quest02 extends AbstractQuest implements MainEvent2024, Quest
                     total++;
                 }
             }
-        }
-
-        for (int textLineIndex = 0; textLineIndex < numberOfTextLines; textLineIndex++) {
-
-            String line = textLines.get(textLineIndex);
-            log(line);
-
-            StringBuilder sb = new StringBuilder();
-            for (int idx = 0; idx < line.length(); idx++) {
-
-                if (flags[textLineIndex][idx]) {
-                    sb.append('*');
-                } else {
-                    sb.append(line.charAt(idx));
-                }
-
-            }
-
-            log(sb);
-
         }
 
         return Integer.toString(total);

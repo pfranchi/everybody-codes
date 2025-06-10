@@ -3,7 +3,7 @@ package events.y2024;
 import common.Grids;
 import common.geo.CardinalDirection2D;
 import common.geo.ImmutableCell2D;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest20;
 import common.support.params.ExecutionParameters;

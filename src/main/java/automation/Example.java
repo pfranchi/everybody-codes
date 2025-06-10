@@ -1,4 +1,4 @@
-package fetch;
+package automation;
 
 import java.nio.file.Path;
 

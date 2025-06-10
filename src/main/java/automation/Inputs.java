@@ -1,4 +1,4 @@
-package fetch;
+package automation;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -88,7 +88,14 @@ public final class Inputs {
     }
 
     private static String fetchFromSite(PuzzleId puzzleId) {
+
+
+
+
+
         throw new UnsupportedOperationException("Fetch from site not implemented yet");
     }
+
+
 
 }

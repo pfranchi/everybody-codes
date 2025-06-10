@@ -5,7 +5,7 @@ import com.google.common.collect.Table;
 import com.google.common.graph.*;
 import common.Graphs;
 import common.geo.ImmutableCoordinate2D;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest17;
 import common.support.params.ExecutionParameters;

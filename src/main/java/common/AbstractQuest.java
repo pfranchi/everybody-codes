@@ -1,10 +1,11 @@
-package common.stats;
+package common;
 
-import common.Strings;
+import automation.model.PartDetail;
+import automation.model.QuestDetail;
 import common.support.interfaces.Event;
 import common.support.interfaces.Quest;
 import common.support.params.ExecutionParameters;
-import fetch.*;
+import automation.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,31 +76,29 @@ public abstract class AbstractQuest implements Event, Quest {
     private String executePart(int part, UnaryOperator<String> challengeSolution) {
 
         EventId eventId = getEventId();
-
-        //int eventYear = getEventYear();
         int questNumber = getQuestNumber();
 
         PuzzleId puzzleId = new PuzzleId(eventId, questNumber, part);
 
-        String input;
-        try {
-            input = Inputs.fetch(puzzleId);
-        } catch (PuzzleNotAvailableException e) {
-            log("Puzzle not yet available");
-            emptyLine();
-            return NOT_IMPLEMENTED;
-        }
+        QuestDetail questDetail = AutomationService.getInput(puzzleId);
+        PartDetail partDetail = questDetail.getParts().get(part - 1);
+
+        String input = partDetail.getDecrypted();
 
         log("START " + puzzleId);
         long start = System.nanoTime();
-        String result = challengeSolution.apply(input);
+        String answer = challengeSolution.apply(input);
         long end = System.nanoTime();
-        log("RESULT = " + result);
+        log("RESULT = " + answer);
         log("TIME = {}", toDisplayedTime(end - start));
         log("END " + puzzleId);
+
+        boolean isAnswerCorrect = AutomationService.postAnswer(puzzleId, questDetail, partDetail, answer);
+
+        log("Answer: {}", isAnswerCorrect ? "CORRECT" : "WRONG");
         emptyLine();
 
-        return result;
+        return answer;
 
     }
 

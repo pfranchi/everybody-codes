@@ -1,4 +1,4 @@
-package fetch;
+package automation;
 
 public class PuzzleNotAvailableException extends Exception {
 }

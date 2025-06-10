@@ -1,5 +1,6 @@
 package events.y2024;
 
+import common.AbstractQuestTest;
 import org.junit.jupiter.api.*;
 
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-class EC2024Quest18Test {
+class EC2024Quest18Test extends AbstractQuestTest {
 
     private static final EC2024Quest18 solution = new EC2024Quest18();
 
@@ -23,7 +24,7 @@ class EC2024Quest18Test {
     @Test
     @Order(2)
     void part1() {
-        assertEquals("109", solution.executePart1());
+        executeQuest(solution, 1, "109");
     }
 
     @Test
@@ -37,7 +38,7 @@ class EC2024Quest18Test {
     @Test
     @Order(4)
     void part2() {
-        assertEquals("2019", solution.executePart2());
+        executeQuest(solution, 2, "2019");
     }
 
     @Test
@@ -52,7 +53,7 @@ class EC2024Quest18Test {
     @Test
     @Order(6)
     void part3() {
-        assertEquals("258723", solution.executePart3());
+        executeQuest(solution, 3, "258723");
     }
 
 

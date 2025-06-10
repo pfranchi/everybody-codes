@@ -1,5 +1,8 @@
 package common.support;
 
+import automation.EventId;
+import automation.EventType;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,19 +10,85 @@ import java.nio.file.Path;
 
 public class SetUpNewYearApp {
 
-    private enum Type {MAIN_EVENT, STORY}
-
     public static void main(String[] args) {
 
-        int year = 2026;
+        EventType type = EventType.MAIN_EVENT;
+        int year = 2025;
+
+        EventId eventId = new EventId(type, year);
 
         try {
+
+            initializeQuestDetails(eventId);
+
+            /*
             createInterface(year);
             createChallenges(year);
             createExamples(year);
             createTests(year);
+
+             */
+
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private static void initializeQuestDetails(EventId eventId) throws IOException {
+
+        if (eventId.type() == EventType.MAIN_EVENT) {
+
+            int eventNumber = eventId.number();
+
+            Path folder = Path.of("src/main/resources/inputs/events/" + eventNumber);
+            if (!Files.exists(folder)) {
+                Files.createDirectory(folder);
+            }
+
+            for (int questNumber = 1; questNumber <= 20; questNumber++) {
+
+                Path path = Path.of("src/main/resources/inputs/events/" + eventNumber + "/quest" + String.format("%02d", questNumber) + ".json");
+
+                if (!Files.exists(path)) {
+                    Files.createFile(path);
+                }
+
+                String fileContent = """
+                        {
+                            "challengeId": {
+                                "eventNumber": %1$s,
+                                "questNumber": %2$s
+                            },
+                            "parts": [
+                                {
+                                    "partNumber": 1,
+                                    "encryptedObtained": false
+                                }, {
+                                    "partNumber": 2,
+                                    "encryptedObtained": false
+                                }, {
+                                    "partNumber": 3,
+                                    "encryptedObtained": false
+                                }
+                            ],
+                            "answerAttempts": {
+                                "part1": [],
+                                "part2": [],
+                                "part3": []
+                            }
+                        }
+                        """.formatted(eventNumber, questNumber);
+
+                try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+                    writer.write(fileContent);
+                }
+
+            }
+
+
+        } else {
+            throw new UnsupportedOperationException();
         }
 
     }

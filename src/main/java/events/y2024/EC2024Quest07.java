@@ -7,7 +7,7 @@ import common.Grids;
 import common.Strings;
 import common.geo.CardinalDirection2D;
 import common.geo.ImmutableCell2D;
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest07;
 import common.support.params.ExecutionParameters;
@@ -60,7 +60,7 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
 
         PLUS(operand -> operand + 1),
         MINUS(operand -> Integer.max(operand - 1, 0)),
-        MANTAIN(IntUnaryOperator.identity());
+        MAINTAIN(IntUnaryOperator.identity());
 
         private final IntUnaryOperator operator;
 
@@ -88,7 +88,7 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
                 Action operator = switch (actionCode.charAt(0)) {
                     case '+' -> PLUS;
                     case '-' -> MINUS;
-                    case '=' -> MANTAIN;
+                    case '=' -> MAINTAIN;
                     default -> throw new IllegalArgumentException("Invalid action: " + actionCode);
                 };
 
@@ -135,8 +135,8 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
     protected String solvePart2(String input, List<String> inputLines, ExecutionParameters executionParameters) {
 
         String track = PART_2_TRACK;
-        if (executionParameters instanceof GenericExecutionParameter<?> genericExecutionParameter) {
-            track = (String) genericExecutionParameter.value();
+        if (executionParameters instanceof GenericExecutionParameter<?>(String value)) {
+            track = value;
         }
 
         String rectifiedTrack = rectifyTrack(track);
@@ -323,7 +323,7 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
 
         List<Action> playerActions = new ArrayList<>(Collections.nCopies(5, PLUS));
         playerActions.addAll(Collections.nCopies(3, MINUS));
-        playerActions.addAll(Collections.nCopies(3, MANTAIN));
+        playerActions.addAll(Collections.nCopies(3, MAINTAIN));
 
         Set<List<Action>> distinctPlayerPlans = new HashSet<>(Collections2.permutations(playerActions));
 

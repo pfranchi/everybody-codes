@@ -1,6 +1,6 @@
 package events.y2024;
 
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest08;
 import common.support.params.ExecutionParameters;

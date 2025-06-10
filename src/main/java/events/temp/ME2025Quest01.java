@@ -1,6 +1,6 @@
 package events.temp;
 
-import common.stats.AbstractQuest;
+import common.AbstractQuest;
 import common.support.interfaces.MainEvent2025;
 import common.support.interfaces.Quest01;
 import common.support.params.ExecutionParameters;
