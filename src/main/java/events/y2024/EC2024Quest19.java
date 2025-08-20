@@ -1,9 +1,9 @@
 package events.y2024;
 
+import common.AbstractQuest;
 import common.Sections;
 import common.geo.ImmutableCell2D;
 import common.geo.PrincipalDirection2D;
-import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest19;
 import common.support.params.ExecutionParameters;

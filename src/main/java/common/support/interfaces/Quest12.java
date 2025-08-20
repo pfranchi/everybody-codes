@@ -6,4 +6,5 @@ public interface Quest12 extends Quest {
     default int getQuestNumber() {
         return 12;
     }
+
 }

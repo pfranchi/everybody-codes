@@ -1,8 +1,8 @@
 package automation;
 
+import automation.model.QuestDetail;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import automation.model.QuestDetail;
 import common.support.SupportService;
 
 import java.io.BufferedReader;

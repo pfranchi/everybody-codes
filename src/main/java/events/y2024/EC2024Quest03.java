@@ -1,10 +1,10 @@
 package events.y2024;
 
+import common.AbstractQuest;
 import common.Grids;
 import common.geo.CardinalDirection2D;
 import common.geo.Direction2D;
 import common.geo.PrincipalDirection2D;
-import common.AbstractQuest;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest03;
 import common.support.params.ExecutionParameters;

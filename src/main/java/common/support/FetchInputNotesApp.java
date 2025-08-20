@@ -1,14 +1,14 @@
 package common.support;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.net.HttpHeaders;
-import com.google.gson.Gson;
 import automation.EventId;
 import automation.EventType;
 import automation.QuestDetailService;
 import automation.model.PartDetail;
 import automation.model.QuestDetail;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.net.HttpHeaders;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.URI;

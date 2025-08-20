@@ -6,4 +6,5 @@ public interface Story01 extends Story {
     default int getStoryNumber() {
         return 1;
     }
+
 }
