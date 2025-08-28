@@ -229,11 +229,17 @@ public class SetUpNewEventApp {
                         
                             @Override
                             protected String solvePart2(String input, List<String> inputLines, ExecutionParameters executionParameters) {
+                        
+                                inputLines.forEach(this::log);
+                        
                                 return NOT_IMPLEMENTED;
                             }
                         
                             @Override
                             protected String solvePart3(String input, List<String> inputLines, ExecutionParameters executionParameters) {
+                        
+                                inputLines.forEach(this::log);
+                        
                                 return NOT_IMPLEMENTED;
                             }
                         
@@ -280,7 +286,7 @@ public class SetUpNewEventApp {
                     Files.createDirectory(partPath);
                 }
 
-                Path exampleFilePath = Path.of(partPathName + "/example.txt");
+                Path exampleFilePath = Path.of(partPathName + "/ex-1.txt");
                 if (!Files.exists(exampleFilePath)) {
                     Files.createFile(exampleFilePath);
                 }

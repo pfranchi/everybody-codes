@@ -50,6 +50,10 @@ public class AutomationService {
 
     public static boolean postAnswer(PuzzleId puzzleId, QuestDetail questDetail, PartDetail partDetail, String answer) {
 
+        if ("Not implemented".equals(answer)) {
+            return false;
+        }
+
         if (partDetail.isCorrectAnswerFound()) {
             return partDetail.getAnswer().equals(answer);
         }
