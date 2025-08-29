@@ -12,9 +12,9 @@ public class SetUpNewEventApp {
 
     public static void main(String[] args) {
 
-        EventType type = EventType.MAIN_EVENT;
-        int year = 2043;
-        int numberOfQuests = 20;
+        EventType type = EventType.STORY;
+        int year = 13;
+        int numberOfQuests = 3;
 
         EventId eventId = new EventId(type, year);
 
