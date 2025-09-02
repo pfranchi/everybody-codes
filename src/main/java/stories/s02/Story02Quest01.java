@@ -8,10 +8,8 @@ import common.support.interfaces.Quest01;
 import common.support.interfaces.Story02;
 import common.support.params.ExecutionParameters;
 
-import java.util.HashSet;
-import java.util.IntSummaryStatistics;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class Story02Quest01 extends AbstractQuest implements Story02, Quest01 {
 
@@ -121,7 +119,7 @@ public class Story02Quest01 extends AbstractQuest implements Story02, Quest01 {
             int max = Integer.MIN_VALUE;
 
             for (int tossSlot = 1; tossSlot <= numberOfTossSlots; tossSlot++) {
-                int coinsWon = findCoinsWon(numberOfRows, numberOfColumns, nails, numberOfTossSlots, instructionSequence, tossSlot);
+                int coinsWon = findCoinsWon(numberOfRows, numberOfColumns, nails, instructionSequence, tossSlot);
                 max = Integer.max(max, coinsWon);
             }
 
@@ -133,7 +131,7 @@ public class Story02Quest01 extends AbstractQuest implements Story02, Quest01 {
     }
 
     private int findCoinsWon(int numberOfRows, int numberOfColumns, Set<ImmutableCell2D> nails,
-                             int numberOfTossSlots, String instructionSequence, int tossSlot) {
+                             String instructionSequence, int tossSlot) {
 
         int startColumnIndex = (tossSlot - 1) * 2;
         int nextInstructionIndex = 0;
@@ -179,7 +177,7 @@ public class Story02Quest01 extends AbstractQuest implements Story02, Quest01 {
     @Override
     protected String solvePart3(String input, List<String> inputLines, ExecutionParameters executionParameters) {
 
-        inputLines.forEach(this::log);
+        // Solved by brute force, which takes approximately 5 seconds
 
         List<List<String>> sections = Sections.splitAtBlankLines(input);
 
@@ -202,34 +200,86 @@ public class Story02Quest01 extends AbstractQuest implements Story02, Quest01 {
 
         int numberOfTossSlots = (numberOfColumns + 1) / 2;
 
-        log("There are {} toss slots", numberOfTossSlots);
+        int numberOfSequences = section2.size();
 
-        int theoreticalMin = 0;
-        int theoreticalMax = 0;
+        NavigableMap<Key, Integer> coinsWon = new TreeMap<>();
+
+        for (int sequenceIndex = 0; sequenceIndex < numberOfSequences; sequenceIndex++) {
+
+            for (int tossSlot = 1; tossSlot <= numberOfTossSlots; tossSlot++) {
+
+                Key key = new Key(sequenceIndex, tossSlot);
+                coinsWon.put(key, findCoinsWon(numberOfRows, numberOfColumns, nails, section2.get(sequenceIndex), tossSlot));
+
+            }
+
+        }
 
         for (String instructionSequence: section2) {
-
-            emptyLine();
-            log("Instruction sequence {}", instructionSequence);
 
             IntSummaryStatistics stats = new IntSummaryStatistics();
 
             for (int tossSlot = 1; tossSlot <= numberOfTossSlots; tossSlot++) {
 
-                int coinsWon = findCoinsWon(numberOfRows, numberOfColumns, nails, numberOfTossSlots, instructionSequence, tossSlot);
-                log("\tSlot {}, coins won {}", tossSlot, coinsWon);
-                stats.accept(coinsWon);
+                int coinsWonForThisToss = findCoinsWon(numberOfRows, numberOfColumns, nails, instructionSequence, tossSlot);
+                stats.accept(coinsWonForThisToss);
 
             }
 
-            theoreticalMin += stats.getMin();
-            theoreticalMax += stats.getMax();
+        }
+
+        int[] selectedTossSlotIndexes = new int[numberOfSequences];
+
+        IntSummaryStatistics stats = new IntSummaryStatistics();
+
+        processAllCombinations(numberOfSequences, numberOfTossSlots, stats, coinsWon, selectedTossSlotIndexes, 0);
+
+        return stats.getMin() + " " + stats.getMax();
+
+    }
+
+    private record Key(int sequenceIndex, int tossSlot) implements Comparable<Key> {
+
+        @Override
+        public int compareTo(Key o) {
+            return Comparator.comparingInt(Key::sequenceIndex).thenComparing(Key::tossSlot).compare(this, o);
+        }
+    }
+
+    private void processAllCombinations(int numberOfSequences, int numberOfTossSlots, IntSummaryStatistics stats,
+                                        Map<Key, Integer> coinsWon, int[] selectedTossSlots, int currentSequenceIndex) {
+
+        if (currentSequenceIndex == numberOfSequences) {
+            // If we get here it means that the array selectedTossSlots is filled up and contains distinct numbers.
+            // Using those toss slots, compute the total amount of coins won and add it to the stats
+
+            int totalCoins = IntStream
+                    .range(0, numberOfSequences)
+                    .map(sequenceIndex -> coinsWon.get(new Key(sequenceIndex, selectedTossSlots[sequenceIndex])))
+                    .sum();
+
+            stats.accept(totalCoins);
+
+        } else {
+
+            // Iterate over the possible toss slots for this sequence index. Recursively call this method only if the selected
+            // toss slot is different to all the other selected toss slots
+
+            for (int tossSlot = 1; tossSlot <= numberOfTossSlots; tossSlot++) {
+
+                if (isNewTossSlot(selectedTossSlots, currentSequenceIndex, tossSlot)) {
+                    selectedTossSlots[currentSequenceIndex] = tossSlot;
+                    processAllCombinations(numberOfSequences, numberOfTossSlots, stats, coinsWon, selectedTossSlots, currentSequenceIndex + 1);
+                }
+
+            }
 
         }
 
-        log("Min {}, max {}", theoreticalMin, theoreticalMax);
+    }
 
-        return NOT_IMPLEMENTED;
+    private boolean isNewTossSlot(int[] selectedTossSlots, int currentSequenceIndex, int candidateValue) {
+        return IntStream.range(0, currentSequenceIndex).noneMatch(i -> selectedTossSlots[i] == candidateValue);
     }
 
 }

@@ -40,7 +40,6 @@ class Story02Quest01Test extends AbstractQuestTest {
         executeQuest(solution, 2, "1066");
     }
 
-    @Disabled("implementation not available yet")
     @Test
     @Order(5)
     void part3Examples() {
@@ -49,7 +48,6 @@ class Story02Quest01Test extends AbstractQuestTest {
         assertEquals(expectedResults, actualResults);
     }
 
-    @Disabled("solution found by hand")
     @Test
     @Order(6)
     void part3() {
