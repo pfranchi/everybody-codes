@@ -2,8 +2,10 @@ package common.pathfinding;
 
 import com.google.common.collect.Table;
 import com.google.common.graph.Graph;
+import common.pathfinding.algorithms.PathFindingAlgorithms;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 class UnweightedGraphPathFinder<N> extends BaseGraphPathFinder<N> {
     
@@ -22,8 +24,13 @@ class UnweightedGraphPathFinder<N> extends BaseGraphPathFinder<N> {
     public int shortestDistance(N start, N end) {
 
         // BFS
-        return PathFindingAlgorithms.distanceBFS(start, end, graph::adjacentNodes);
+        return PathFindingAlgorithms.minDistanceSimpleCost(graph::successors, start, end);
 
+    }
+
+    @Override
+    public int shortestDistance(N start, Predicate<? super N> stoppingCondition) {
+        return PathFindingAlgorithms.minDistanceSimpleCost(graph::successors, start, stoppingCondition);
     }
 
     @Override
@@ -71,8 +78,13 @@ class UnweightedGraphPathFinder<N> extends BaseGraphPathFinder<N> {
 
     @Override
     public List<N> shortestPath(N start, N end) {
-        List<N> l = PathFindingAlgorithms.pathBFS(start, end, graph::adjacentNodes);
+        List<N> l = PathFindingAlgorithms.minPathSimpleCost(graph::successors, start, end);
         return new ArrayList<>(l);
+    }
+
+    @Override
+    public int maxDistance(N start) {
+        return PathFindingAlgorithms.maxDistanceSimpleCost(graph::successors, start);
     }
 
 }

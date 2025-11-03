@@ -1,10 +1,12 @@
 package common.pathfinding;
 
 import com.google.common.graph.ValueGraph;
+import common.pathfinding.algorithms.PathFindingAlgorithms;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.ToIntBiFunction;
 
 public class WeightedGraphPathFinder<N> extends BaseGraphPathFinder<N> {
@@ -26,7 +28,12 @@ public class WeightedGraphPathFinder<N> extends BaseGraphPathFinder<N> {
         Function<N, Set<N>> neighborExtractor = graph::adjacentNodes;
         ToIntBiFunction<N, N> costOfMovingExtractor = costOfMovingExtractor();
 
-        return PathFindingAlgorithms.distanceDijkstra(start, end, neighborExtractor, costOfMovingExtractor);
+        return PathFindingAlgorithms.minDistanceVariableCost(neighborExtractor, costOfMovingExtractor, start, end);
+    }
+
+    @Override
+    public int shortestDistance(N start, Predicate<? super N> stoppingCondition) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -35,11 +42,16 @@ public class WeightedGraphPathFinder<N> extends BaseGraphPathFinder<N> {
         Function<N, Set<N>> neighborExtractor = graph::adjacentNodes;
         ToIntBiFunction<N, N> costOfMovingExtractor = costOfMovingExtractor();
 
-        return PathFindingAlgorithms.pathDijkstra(start, end, neighborExtractor, costOfMovingExtractor);
+        return PathFindingAlgorithms.minPathVariableCost(neighborExtractor, costOfMovingExtractor, start, end);
     }
 
     private ToIntBiFunction<N, N> costOfMovingExtractor() {
         return (nodeU, nodeV) -> graph.edgeValue(nodeU, nodeV).orElseThrow();
+    }
+
+    @Override
+    public int maxDistance(N start) {
+        throw new UnsupportedOperationException();
     }
 
 }

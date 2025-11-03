@@ -77,7 +77,6 @@ public class Story01Quest03 extends AbstractQuest implements Story01, Quest03 {
 
     private BigInteger solveSystemOfModularEquations(List<Integer> mods, List<Integer> remainders) {
 
-        //mods = new ArrayList<>(mods);
         remainders = new ArrayList<>(remainders);
 
         int numberOfEquations = mods.size();

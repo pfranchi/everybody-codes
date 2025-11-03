@@ -36,7 +36,6 @@ class EC2024Quest15Test extends AbstractQuestTest {
     }
 
     @Test
-    @Disabled("Implementation too slow")
     @Order(4)
     void part2() {
         executeQuest(solution, 2, "512");
@@ -50,7 +49,7 @@ class EC2024Quest15Test extends AbstractQuestTest {
         assertEquals(expectedResults, actualResults);
     }
 
-    @Disabled("Not implemented")
+    @Disabled("Current implementation requires too much memory")
     @Test
     @Order(6)
     void part3() {

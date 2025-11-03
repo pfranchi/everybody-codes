@@ -12,9 +12,19 @@ public class SetUpNewEventApp {
 
     public static void main(String[] args) {
 
-        EventType type = EventType.STORY;
-        int year = 13;
-        int numberOfQuests = 3;
+        try {
+            creaEstemporaneo();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void creaGenerale() {
+
+        EventType type = EventType.MAIN_EVENT;
+        int year = 2025;
+        int numberOfQuests = 20;
 
         EventId eventId = new EventId(type, year);
 
@@ -32,7 +42,19 @@ public class SetUpNewEventApp {
 
     }
 
+    private static void creaEstemporaneo() throws IOException {
+
+        EventId eventId = new EventId(EventType.MAIN_EVENT, 2024);
+
+        createQuestDetails(eventId, 10, 10);
+
+    }
+
     private static void createQuestDetails(EventId eventId, int numberOfQuests) throws IOException {
+        createQuestDetails(eventId, 1, numberOfQuests);
+    }
+
+    private static void createQuestDetails(EventId eventId, int minQuestNumber, int maxQuestNumber) throws IOException {
 
         String folderPathName = "src/main/resources/inputs/";
 
@@ -48,7 +70,7 @@ public class SetUpNewEventApp {
             Files.createDirectory(folderPath);
         }
 
-        for (int questNumber = 1; questNumber <= numberOfQuests; questNumber++) {
+        for (int questNumber = minQuestNumber; questNumber <= maxQuestNumber; questNumber++) {
 
             Path path = Path.of(folderPathName + "/quest" + String.format("%02d", questNumber) + ".json");
 

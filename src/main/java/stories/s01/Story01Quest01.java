@@ -164,7 +164,6 @@ public class Story01Quest01 extends AbstractQuest implements Story01, Quest01 {
         Map<Long, Integer> seenRemainders = new LinkedHashMap<>();
 
         long currentRemainder = 1;
-        //seenRemainders.put(currentRemainder, 0);
 
         int step = 1;
         while (step <= exp) {
@@ -179,10 +178,6 @@ public class Story01Quest01 extends AbstractQuest implements Story01, Quest01 {
 
                 long numberOfBlocks = (exp - previousStep) / delta;
 
-                //emptyLine();
-                //log("Remainder {} seen at step {} was already seen at step {}. Delta = {}", currentRemainder, step, previousStep, delta);
-                //log("Will have {} block(s)", numberOfBlocks);
-
                 long sumOfBlock = 0;
                 for (Map.Entry<Long, Integer> entry: seenRemainders.entrySet()) {
                     int blockStep = entry.getValue();
@@ -190,8 +185,6 @@ public class Story01Quest01 extends AbstractQuest implements Story01, Quest01 {
                         sumOfBlock += entry.getKey();
                     }
                 }
-
-                //long sumOfBlock = seenRemainders.keySet().stream().mapToLong(l -> l).sum();
 
                 long total = numberOfBlocks * sumOfBlock;
 
@@ -201,8 +194,6 @@ public class Story01Quest01 extends AbstractQuest implements Story01, Quest01 {
                         total += entry.getKey();
                     }
                 }
-
-                //log("Remainders so far: {}. Sum of block = {}. Total so far = {}", seenRemainders, sumOfBlock, total);
 
                 total += currentRemainder;
 
@@ -214,8 +205,6 @@ public class Story01Quest01 extends AbstractQuest implements Story01, Quest01 {
                     total += currentRemainder;
                 }
 
-                //log("Total is {}", total);
-
                 return total;
 
             }
@@ -225,8 +214,6 @@ public class Story01Quest01 extends AbstractQuest implements Story01, Quest01 {
             step++;
 
         }
-
-        //log("Remainders are: {}", seenRemainders);
 
         return seenRemainders.keySet().stream().mapToLong(l -> l).sum();
 

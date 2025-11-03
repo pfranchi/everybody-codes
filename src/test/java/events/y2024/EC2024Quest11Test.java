@@ -53,7 +53,7 @@ class EC2024Quest11Test extends AbstractQuestTest {
     @Test
     @Order(6)
     void part3() {
-        executeQuest(solution, 3, "Not implemented");
+        executeQuest(solution, 3, "1373474665048");
     }
 
 

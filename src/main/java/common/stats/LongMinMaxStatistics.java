@@ -4,8 +4,8 @@ import java.util.function.LongConsumer;
 
 public class LongMinMaxStatistics implements LongConsumer {
 
-    private long min = Integer.MAX_VALUE;
-    private long max = Integer.MIN_VALUE;
+    private long min = Long.MAX_VALUE;
+    private long max = Long.MIN_VALUE;
 
     public LongMinMaxStatistics() {
     }

@@ -45,15 +45,14 @@ class EC2024Quest12Test extends AbstractQuestTest {
     @Order(5)
     void part3Examples() {
         List<String> actualResults = solution.executeExamples(3);
-        List<String> expectedResults = Collections.singletonList("Not implemented");
+        List<String> expectedResults = List.of("11", "2");
         assertEquals(expectedResults, actualResults);
     }
 
-    @Disabled
     @Test
     @Order(6)
     void part3() {
-        executeQuest(solution, 3, "Not implemented");
+        executeQuest(solution, 3, "732340");
     }
 
 

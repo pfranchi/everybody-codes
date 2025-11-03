@@ -4,7 +4,7 @@ import common.AbstractQuest;
 import common.Grids;
 import common.geo.CardinalDirection2D;
 import common.geo.ImmutableCell2D;
-import common.pathfinding.PathFindingAlgorithms;
+import common.pathfinding.algorithms.PathFindingAlgorithms;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest13;
 import common.support.params.ExecutionParameters;
@@ -61,7 +61,7 @@ public class EC2024Quest13 extends AbstractQuest implements MainEvent2024, Quest
 
         ToIntBiFunction<ImmutableCell2D, ImmutableCell2D> costOfMovingExtractor = (start, end) -> costOfMoving(grid, start, end);
 
-        int minDistance = PathFindingAlgorithms.distanceDijkstra(startPosition, endPosition, neighborExtractor, costOfMovingExtractor);
+        int minDistance = PathFindingAlgorithms.minDistanceVariableCost(neighborExtractor, costOfMovingExtractor, startPosition, endPosition);
 
         return Integer.toString(minDistance);
     }
@@ -200,7 +200,7 @@ public class EC2024Quest13 extends AbstractQuest implements MainEvent2024, Quest
         int minDistance = Integer.MAX_VALUE;
 
         for (ImmutableCell2D startPosition: startPositions) {
-            int distance = PathFindingAlgorithms.distanceDijkstra(startPosition, endPosition, neighborExtractor, costOfMovingExtractor);
+            int distance = PathFindingAlgorithms.minDistanceVariableCost(neighborExtractor, costOfMovingExtractor, startPosition, endPosition);
             minDistance = Integer.min(minDistance, distance);
         }
 

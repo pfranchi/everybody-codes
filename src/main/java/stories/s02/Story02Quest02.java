@@ -114,8 +114,6 @@ public class Story02Quest02 extends AbstractQuest implements Story02, Quest02 {
 
         int baseSequenceLength = baseSequence.length();
 
-        log("Base sequence has length {}", baseSequenceLength);
-
         int sequenceRepetitions = 100000;
 
         int currentNumberOfBalloons = baseSequenceLength * sequenceRepetitions;

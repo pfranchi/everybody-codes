@@ -1,15 +1,17 @@
 package events.y2024;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 import common.AbstractQuest;
-import common.geo.CardinalDirection2D;
-import common.geo.ImmutableCoordinate2D;
-import common.geo.MutableCoordinate2D;
-import common.geo.PrincipalDirection2D;
+import common.geo.*;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest12;
 import common.support.params.ExecutionParameters;
 
 import java.util.*;
+
+import static common.geo.ImmutableCoordinate2D.nTimes;
+import static common.geo.PrincipalDirection2D.*;
 
 public class EC2024Quest12 extends AbstractQuest implements MainEvent2024, Quest12 {
 
@@ -51,7 +53,7 @@ public class EC2024Quest12 extends AbstractQuest implements MainEvent2024, Quest
 
             for (int step = 0; step <= targetTowerHeight; step++ ) {
 
-                ImmutableCoordinate2D targetPosition = targetTowerTopPosition.add(ImmutableCoordinate2D.nTimes(CardinalDirection2D.SOUTH, step));
+                ImmutableCoordinate2D targetPosition = targetTowerTopPosition.add(nTimes(SOUTH, step));
 
                 if (targetPositions.remove(targetPosition)) {
 
@@ -75,20 +77,20 @@ public class EC2024Quest12 extends AbstractQuest implements MainEvent2024, Quest
 
         // Move up and to the right
         for (int step = 1; step <= shootingPower; step++) {
-            projectileCurrentPosition.move(PrincipalDirection2D.NORTH_EAST);
+            projectileCurrentPosition.move(NORTH_EAST);
             path.add(ImmutableCoordinate2D.copyOf(projectileCurrentPosition));
         }
 
         // To the right
         for (int step = 1; step <= shootingPower; step++) {
-            projectileCurrentPosition.move(PrincipalDirection2D.EAST);
+            projectileCurrentPosition.move(EAST);
             path.add(ImmutableCoordinate2D.copyOf(projectileCurrentPosition));
         }
 
         int heightReached = projectileCurrentPosition.getY();
         // Move down
         for (int step = 1; step <= heightReached; step++) {
-            projectileCurrentPosition.move(PrincipalDirection2D.SOUTH_EAST);
+            projectileCurrentPosition.move(SOUTH_EAST);
             path.add(ImmutableCoordinate2D.copyOf(projectileCurrentPosition));
         }
 
@@ -163,7 +165,7 @@ public class EC2024Quest12 extends AbstractQuest implements MainEvent2024, Quest
 
             for (int step = 0; step <= targetTowerHeight; step++ ) {
 
-                ImmutableCoordinate2D targetPosition = targetTowerTopPosition.add(ImmutableCoordinate2D.nTimes(CardinalDirection2D.SOUTH, step));
+                ImmutableCoordinate2D targetPosition = targetTowerTopPosition.add(nTimes(SOUTH, step));
 
                 if (targetPositions.remove(targetPosition)) {
 
@@ -188,6 +190,130 @@ public class EC2024Quest12 extends AbstractQuest implements MainEvent2024, Quest
 
     @Override
     protected String solvePart3(String input, List<String> inputLines, ExecutionParameters executionParameters) {
-        return NOT_IMPLEMENTED;
+
+        ImmutableCoordinate2D[] sourcePositions = {
+                ImmutableCoordinate2D.of(0, 0),
+                ImmutableCoordinate2D.of(0, 1),
+                ImmutableCoordinate2D.of(0, 2)
+        };
+
+        long total = 0;
+
+        for (String line: inputLines) {
+            String[] parts = line.split(" ");
+            int startingX = Integer.parseInt(parts[0]);
+            int startingY = Integer.parseInt(parts[1]);
+
+            long rankingValue = minRankingValue(sourcePositions, startingX, startingY);
+            total += rankingValue;
+
+        }
+
+        return Long.toString(total);
     }
+
+    private long minRankingValue(ImmutableCoordinate2D[] sourcePositions, int startingX, int startingY) {
+
+        ImmutableCoordinate2D startingPosition = ImmutableCoordinate2D.of(startingX, startingY);
+
+        int meteorMaxFlightTime = Integer.min(startingX, startingY);
+        int minXReachableByMeteor = startingX - meteorMaxFlightTime;
+
+        //log("Meteor that starts at coordinate {} has max flight time of {}, min reachable x is {}",
+                //startingPosition, meteorMaxFlightTime, minXReachableByMeteor);
+
+        int minDelay = startingX % 2;
+        int maxDelay = 2 * meteorMaxFlightTime - startingX;
+
+        for (int delay = minDelay; delay <= maxDelay; delay += 2) {
+
+            int flightTime = (startingX - delay) / 2;
+            int meetingTime = delay + flightTime;
+            ImmutableCoordinate2D meteorMeetingPosition = startingPosition.add(nTimes(SOUTH_WEST, meetingTime));
+
+            //log("Delay {}, flight time {}, meeting time {}. At that time, meteor is at coordinate {}", delay, flightTime, meetingTime, meteorMeetingPosition);
+
+            OptionalLong optionalRankingValue = minRankingValueForThisDelay(sourcePositions, flightTime, meteorMeetingPosition);
+
+            if (optionalRankingValue.isPresent()) {
+                return optionalRankingValue.getAsLong();
+            }
+
+        }
+
+        throw new IllegalStateException("Should not get here");
+
+    }
+
+    private OptionalLong minRankingValueForThisDelay(ImmutableCoordinate2D[] sourcePositions, int flightTime, ImmutableCoordinate2D meteorMeetingPosition) {
+
+        /*
+            For all values of shooting power >= flightTime, the final position of the projectile stays the same.
+            If it misses the meteor by then, it will miss for all shooting powers.
+
+            The max ranking value that we need to check is 3 * flightTime, because for this ranking value we have shootingPower = flightTime.
+
+         */
+
+        for (int rankingValue = 1; rankingValue <= 3 * flightTime; rankingValue++) {
+
+            //log("Checking ranking value {}", rankingValue);
+
+            for (int towerSegment = 1; towerSegment <= 3; towerSegment++) {
+
+                if (rankingValue % towerSegment == 0) {
+
+                    // It is possible to obtain this ranking value by shooting from this tower segment
+                    int shootingPower = rankingValue / towerSegment;
+
+                    if (shootingPower <= flightTime) {
+
+                        //log("Shooting from tower segment {} with shooting power {}", towerSegment, shootingPower);
+
+                        Optional<ImmutableCoordinate2D> position = positionInTrajectory(sourcePositions[towerSegment - 1], shootingPower, flightTime);
+
+                        if (position.isPresent() && position.get().equals(meteorMeetingPosition)) {
+                            //log("METEOR DESTROYED! Ranking value {}", rankingValue);
+                            return OptionalLong.of(rankingValue);
+                        } else {
+                            //log("Missed");
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        return OptionalLong.empty();
+
+    }
+
+    private Optional<ImmutableCoordinate2D> positionInTrajectory(ImmutableCoordinate2D source, int shootingPower, int flightTime) {
+
+        if (flightTime <= shootingPower) {
+            return Optional.of(source.add( nTimes(NORTH_EAST, flightTime) ) );
+        }
+
+        if (flightTime <= shootingPower * 2) {
+            return Optional.of(source
+                    .add(nTimes(NORTH_EAST, shootingPower))
+                    .add(nTimes(EAST, flightTime - shootingPower))
+            );
+        }
+
+        if (flightTime <= shootingPower * 3 + source.getY()) {
+            return Optional.of(source
+                    .add(nTimes(NORTH_EAST, shootingPower))
+                    .add(nTimes(EAST, shootingPower))
+                    .add(nTimes(SOUTH_EAST, flightTime - 2 * shootingPower))
+            );
+        }
+
+        return Optional.empty();
+
+    }
+
 }

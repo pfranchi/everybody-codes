@@ -6,4 +6,6 @@ public interface MainEvent2025 extends MainEvent {
     default int getEventYear() {
         return 2025;
     }
+
 }
+

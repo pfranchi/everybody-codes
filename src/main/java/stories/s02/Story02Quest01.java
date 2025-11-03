@@ -8,6 +8,7 @@ import common.support.interfaces.Quest01;
 import common.support.interfaces.Story02;
 import common.support.params.ExecutionParameters;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -241,7 +242,7 @@ public class Story02Quest01 extends AbstractQuest implements Story02, Quest01 {
     private record Key(int sequenceIndex, int tossSlot) implements Comparable<Key> {
 
         @Override
-        public int compareTo(Key o) {
+        public int compareTo(@Nonnull Key o) {
             return Comparator.comparingInt(Key::sequenceIndex).thenComparing(Key::tossSlot).compare(this, o);
         }
     }

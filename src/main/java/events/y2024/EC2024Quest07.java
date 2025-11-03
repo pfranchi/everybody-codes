@@ -15,7 +15,7 @@ import common.support.params.GenericExecutionParameter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
-import java.util.function.IntUnaryOperator;
+import java.util.function.LongUnaryOperator;
 import java.util.function.UnaryOperator;
 
 import static events.y2024.EC2024Quest07.Action.*;
@@ -36,17 +36,17 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
             List<Action> actions = (List<Action>) entry.getValue();
             int numberOfActions = actions.size();
 
-            int currentValue = 10; // Start value
+            long currentValue = 10; // Start value
 
-            List<Integer> values = new ArrayList<>();
+            List<Long> values = new ArrayList<>();
 
             for (int segment = 0; segment < 10; segment++) {
                 Action currentAction = actions.get( segment % numberOfActions );
-                currentValue = currentAction.applyAsInt(currentValue);
+                currentValue = currentAction.applyAsLong(currentValue);
                 values.add(currentValue);
             }
 
-            long totalEssence = values.stream().mapToInt(i -> i).sum();
+            long totalEssence = values.stream().mapToLong(i -> i).sum();
             totalEssences.put(planId, totalEssence);
 
         }
@@ -58,20 +58,26 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
 
     public enum Action {
 
-        PLUS(operand -> operand + 1),
-        MINUS(operand -> Integer.max(operand - 1, 0)),
-        MAINTAIN(IntUnaryOperator.identity());
+        PLUS(operand -> operand + 1, "+"),
+        MINUS(operand -> Long.max(operand - 1, 0), "-"),
+        MAINTAIN(LongUnaryOperator.identity(), "=");
 
-        private final IntUnaryOperator operator;
+        private final LongUnaryOperator operator;
+        private final String symbol;
 
-        Action(IntUnaryOperator operator) {
+        Action(LongUnaryOperator operator, String symbol) {
             this.operator = operator;
+            this.symbol = symbol;
         }
 
-        public int applyAsInt(int operand) {
-            return operator.applyAsInt(operand);
+        public long applyAsLong(long operand) {
+            return operator.applyAsLong(operand);
         }
 
+        @Override
+        public String toString() {
+            return symbol;
+        }
     }
 
     private ListMultimap<String, Action> createPlanActions(List<String> inputLines) {
@@ -159,6 +165,8 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
 
             totalEssences.put(planId, total);
 
+            log("Plan {} gathers {} total essence", planId, total);
+
         }
 
         return getRankings(totalEssences);
@@ -170,20 +178,20 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
 
         int trackLength = trackActions.size();
 
-        int currentValue = 10;
-        int totalNumberOfSteps = 0;
+        long currentValue = 10L;
+        long totalNumberOfSteps = 0;
         long total = 0;
 
         for (int trackLoopNumber = 1; trackLoopNumber <= numberOfTrackLoops; trackLoopNumber++) {
 
             for (int trackSegment = 0; trackSegment < trackLength; trackSegment++) {
 
-                TrackAction trackAction = trackActions.get(totalNumberOfSteps % trackLength);
-                Action planAction = planActions.get(totalNumberOfSteps % numberOfActions);
+                TrackAction trackAction = trackActions.get((int) (totalNumberOfSteps % trackLength));
+                Action planAction = planActions.get((int) (totalNumberOfSteps % numberOfActions));
 
                 Action actualAction = trackAction.transform(planAction);
 
-                currentValue = actualAction.applyAsInt(currentValue);
+                currentValue = actualAction.applyAsLong(currentValue);
 
                 totalNumberOfSteps++;
                 total += currentValue;
@@ -224,15 +232,17 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
 
     public enum TrackAction {
 
-        FORCED_PLUS(_ -> PLUS),
-        FORCED_MINUS(_ -> MINUS),
-        UNALTERED(UnaryOperator.identity()),
-        END(UnaryOperator.identity());
+        FORCED_PLUS(_ -> PLUS, "+"),
+        FORCED_MINUS(_ -> MINUS, "-"),
+        UNALTERED(UnaryOperator.identity(), "="),
+        END(UnaryOperator.identity(), "E");
 
         private final UnaryOperator<Action> operatorTransformator;
+        private final String symbol;
 
-        TrackAction(UnaryOperator<Action> operatorTransformator) {
+        TrackAction(UnaryOperator<Action> operatorTransformator, String symbol) {
             this.operatorTransformator = operatorTransformator;
+            this.symbol = symbol;
         }
 
         public static TrackAction fromChar(char c) {
@@ -248,11 +258,19 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
             return operatorTransformator.apply(action);
         }
 
+        @Override
+        public String toString() {
+            return symbol;
+        }
+
     }
 
     @Override
     protected String solvePart3(String input, List<String> inputLines, ExecutionParameters executionParameters) {
+        return solvePart3Attempt1(inputLines);
+    }
 
+    private String solvePart3Attempt1(List<String> inputLines) {
         String track = """
                 S+= +=-== +=++=     =+=+=--=    =-= ++=     +=-  =+=++=-+==+ =++=-=-=--
                 - + +   + =   =     =      =   == = - -     - =  =         =-=        -
@@ -301,7 +319,7 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
                 ImmutableCell2D possibleNextPosition = currentPosition.add(direction);
 
                 if (Grids.isPositionInGrid(numberOfRows, numberOfColumns, possibleNextPosition.getRow(), possibleNextPosition.getColumn())
-                        && !possibleNextPosition.equals(previousPosition) && trackChars[possibleNextPosition.getRow()][possibleNextPosition.getColumn()] != ' ') {
+                    && !possibleNextPosition.equals(previousPosition) && trackChars[possibleNextPosition.getRow()][possibleNextPosition.getColumn()] != ' ') {
                     previousPosition = currentPosition;
                     currentPosition = possibleNextPosition;
                     break;
@@ -314,12 +332,10 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
         trackActions.add(END);
 
         ListMultimap<String, Action> planIdToActions = createPlanActions(inputLines);
-        Map.Entry<String, Action> entry = planIdToActions.entries().iterator().next();
-        List<Action> opponentPlanActions = Collections.singletonList(entry.getValue());
+        Map.Entry<String, Collection<Action>> entry = planIdToActions.asMap().entrySet().iterator().next();
+        List<Action> opponentPlanActions = (List<Action>) entry.getValue();
 
         long opponentTotalEssence = executePlan(opponentPlanActions, trackActions, 2024);
-
-        log("Opponent has total essence {}", opponentTotalEssence);
 
         List<Action> playerActions = new ArrayList<>(Collections.nCopies(5, PLUS));
         playerActions.addAll(Collections.nCopies(3, MINUS));
@@ -327,29 +343,27 @@ public class EC2024Quest07 extends AbstractQuest implements MainEvent2024, Quest
 
         Set<List<Action>> distinctPlayerPlans = new HashSet<>(Collections2.permutations(playerActions));
 
-        log("There are {} distinct player plans", distinctPlayerPlans.size());
-
         int countGT = 0;
-        int countGE = 0;
+
+        int playerPlanCount = 0;
 
         for (List<Action> playerPlan: distinctPlayerPlans) {
 
+            playerPlanCount++;
+
             long playerTotalEssence = executePlan(playerPlan, trackActions, 2024);
 
-            if (playerTotalEssence >= opponentTotalEssence) {
-                countGE++;
-                if (playerTotalEssence > opponentTotalEssence) {
-                    countGT++;
-                }
+            if (playerTotalEssence > opponentTotalEssence) {
+                countGT++;
+            }
+
+            if (playerPlanCount % 100 == 0) {
+                log("Executing plan #{} / {}: {}. Essence gathered by player: {}", playerPlanCount, distinctPlayerPlans.size(), playerPlan, playerTotalEssence);
             }
 
         }
 
-        log("There are {} plans with essence >= than the opponent", countGE);
-        log("There are {} plans with essence > than the opponent", countGT);
-
-        return NOT_IMPLEMENTED;
+        return Integer.toString(countGT);
     }
-
 
 }

@@ -60,11 +60,11 @@ class EC2024Quest07Test extends AbstractQuestTest {
         assertEquals(expectedResults, actualResults);
     }
 
-    @Disabled
+    @Disabled("Takes approximately 2.5 minutes")
     @Test
     @Order(6)
     void part3() {
-        executeQuest(solution, 1, "Not implemented");
+        executeQuest(solution, 3, "4180");
     }
 
 

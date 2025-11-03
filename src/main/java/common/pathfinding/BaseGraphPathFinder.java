@@ -24,11 +24,6 @@ abstract class BaseGraphPathFinder<N> implements PathFinder<N> {
     }
 
     @Override
-    public Map<N, Integer> shortestDistances(N start, Collection<? extends N> ends) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Table<N, N, Integer> shortestDistances() {
 
         // Suboptimal (but working) implementation. Defers to shortestDistances(N).

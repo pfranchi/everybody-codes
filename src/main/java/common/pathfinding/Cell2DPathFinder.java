@@ -23,11 +23,6 @@ abstract class Cell2DPathFinder implements PathFinder<Cell2D> {
     }
 
     @Override
-    public Map<Cell2D, Integer> shortestDistances(Cell2D start, Collection<? extends Cell2D> ends) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Map<Cell2D, Integer> shortestDistances(Cell2D start) {
         throw new UnsupportedOperationException();
     }

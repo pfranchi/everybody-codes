@@ -31,8 +31,6 @@ public class Story01Quest02 extends AbstractQuest implements Story01, Quest02 {
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {
 
-        //inputLines.forEach(this::log);
-
         int numberOfInstructions = inputLines.size();
 
         String firstInstruction = inputLines.getFirst();
@@ -216,7 +214,6 @@ public class Story01Quest02 extends AbstractQuest implements Story01, Quest02 {
             } else if (swapMatcher.matches()) {
 
                 int swapId = Integer.parseInt(swapMatcher.group("id"));
-                //log("Swapping nodes with id {}", swapId);
 
                 Node leftNodeToSwap = findNodeById(leftRoot, swapId);
                 Node rightNodeToSwap = findNodeById(rightRoot, swapId);

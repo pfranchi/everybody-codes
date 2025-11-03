@@ -9,6 +9,7 @@ import common.support.interfaces.Quest18;
 import common.support.params.ExecutionParameters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class EC2024Quest18 extends AbstractQuest implements MainEvent2024, Quest
 
         PathFinder<Cell2D> pathFinder = PathFinder.forSimpleMaze(grid);
 
-        Map<Cell2D, Integer> shortestDistances = pathFinder.shortestDistances(startingPosition, palmPositions);
+        Map<Cell2D, Integer> shortestDistances = createMapOfShortestDistances(pathFinder, startingPosition, palmPositions);
 
         return Integer.toString(shortestDistances.values().stream().mapToInt(i -> i).max().orElseThrow());
 
@@ -97,8 +98,8 @@ public class EC2024Quest18 extends AbstractQuest implements MainEvent2024, Quest
         ImmutableCell2D startingPosition1 = startingPositions.getFirst();
         ImmutableCell2D startingPosition2 = startingPositions.getLast();
 
-        Map<Cell2D, Integer> shortestDistances1 = pathFinder.shortestDistances(startingPosition1, palmPositions);
-        Map<Cell2D, Integer> shortestDistances2 = pathFinder.shortestDistances(startingPosition2, palmPositions);
+        Map<Cell2D, Integer> shortestDistances1 = createMapOfShortestDistances(pathFinder, startingPosition1, palmPositions);
+        Map<Cell2D, Integer> shortestDistances2 = createMapOfShortestDistances(pathFinder, startingPosition2, palmPositions);
 
         int max = Integer.MIN_VALUE;
 
@@ -152,7 +153,7 @@ public class EC2024Quest18 extends AbstractQuest implements MainEvent2024, Quest
 
             evalCount++;
 
-            Map<Cell2D, Integer> shortestDistances = pathFinder.shortestDistances(emptyPosition, palmPositions);
+            Map<Cell2D, Integer> shortestDistances = createMapOfShortestDistances(pathFinder, emptyPosition, palmPositions);
 
             int value = shortestDistances.values().stream().mapToInt(i -> i).sum();
 
@@ -166,4 +167,18 @@ public class EC2024Quest18 extends AbstractQuest implements MainEvent2024, Quest
 
         return Integer.toString(minValue);
     }
+
+    private Map<Cell2D, Integer> createMapOfShortestDistances(PathFinder<Cell2D> pathFinder, ImmutableCell2D startingPosition,
+                                                              List<ImmutableCell2D> targetPositions) {
+
+        Map<Cell2D, Integer> shortestDistances = new HashMap<>();
+
+        for (ImmutableCell2D targetPosition: targetPositions) {
+            shortestDistances.put(targetPosition, pathFinder.shortestDistance(startingPosition, targetPosition));
+        }
+
+        return shortestDistances;
+
+    }
+
 }

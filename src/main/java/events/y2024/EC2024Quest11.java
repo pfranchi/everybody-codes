@@ -101,8 +101,6 @@ public class EC2024Quest11 extends AbstractQuest implements MainEvent2024, Quest
                 .map(inputLine -> inputLine.split(":")[0])
                 .collect(Collectors.toCollection(TreeSet::new));
 
-        log("Categories are: {}", categories);
-
         Table<String, String, Long> matrix = HashBasedTable.create(numberOfCategories, numberOfCategories);
 
         for (String category1: categories) {
@@ -142,8 +140,6 @@ public class EC2024Quest11 extends AbstractQuest implements MainEvent2024, Quest
 
             long totalPopulation = population.values().stream().mapToLong(i -> i).sum();
             stats.accept(totalPopulation);
-
-            log("Start category {} produces a total population of {}", category, totalPopulation);
 
         }
 

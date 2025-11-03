@@ -1,11 +1,13 @@
 package events.y2024;
 
 import common.AbstractQuest;
+import common.Strings;
 import common.support.interfaces.MainEvent2024;
 import common.support.interfaces.Quest08;
 import common.support.params.ExecutionParameters;
 import common.support.params.GenericExecutionParameter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EC2024Quest08 extends AbstractQuest implements MainEvent2024, Quest08 {
@@ -29,8 +31,7 @@ public class EC2024Quest08 extends AbstractQuest implements MainEvent2024, Quest
     protected String solvePart2(String input, List<String> inputLines, ExecutionParameters executionParameters) {
 
         Quest8Input questInput = ACTUAL_INPUT;
-        if (executionParameters instanceof GenericExecutionParameter<?> genericExecutionParameter) {
-            Object value = genericExecutionParameter.value();
+        if (executionParameters instanceof GenericExecutionParameter<?>(Object value)) {
             if (value instanceof Quest8Input quest8Input) {
                 questInput = quest8Input;
             }
@@ -40,8 +41,6 @@ public class EC2024Quest08 extends AbstractQuest implements MainEvent2024, Quest
         int numberOfAvailableBlocks = questInput.numberOfAvailableBlocks();
 
         int inputNumber = Integer.parseInt(input);
-
-        log("Input number is {}, acolytes {}, available blocks {}", inputNumber, numberOfPriestAcolytes, numberOfAvailableBlocks);
 
         int totalNumberOfUsedBlocks = 0;
         int currentLayerNumber = 0;
@@ -56,21 +55,64 @@ public class EC2024Quest08 extends AbstractQuest implements MainEvent2024, Quest
 
             totalNumberOfUsedBlocks += numberOfBlocksInThisLayer;
 
-            log("Layer {} has thickness {} and adds {} blocks, bringing the total to {}", currentLayerNumber,
-                    currentLayerThickness, numberOfBlocksInThisLayer, totalNumberOfUsedBlocks);
-
             currentLayerThickness = (currentLayerThickness * inputNumber) % numberOfPriestAcolytes;
 
         }
 
         int numberOfMissingBlocks = totalNumberOfUsedBlocks - numberOfAvailableBlocks;
-        long currentLayerWidth = currentLayerNumber * 2 - 1;
+        long currentLayerWidth = currentLayerNumber * 2L - 1;
 
         return Long.toString(numberOfMissingBlocks * currentLayerWidth);
     }
 
     @Override
     protected String solvePart3(String input, List<String> inputLines, ExecutionParameters executionParameters) {
-        return NOT_IMPLEMENTED;
+
+        long numberOfHighPriests = Long.parseLong(Strings.firstRow(input));
+        int numberOfAcolytes = 10;
+
+        long availableBlocks = 202400000L;
+
+        long firstLayerThickness = 1L;
+        List<Long> columnHeights = new ArrayList<>();
+        columnHeights.add(firstLayerThickness);
+
+        long previousLayerThickness = firstLayerThickness;
+
+        int numberOfLayers = 1;
+
+        while (true) {
+
+            numberOfLayers++;
+
+            long thickness = previousLayerThickness * numberOfHighPriests % numberOfAcolytes + numberOfAcolytes;
+
+            previousLayerThickness = thickness;
+
+            for (int previousColumnIndex = 0; previousColumnIndex < numberOfLayers - 1; previousColumnIndex++) {
+                columnHeights.set(previousColumnIndex, columnHeights.get(previousColumnIndex) + thickness);
+            }
+
+            columnHeights.add(thickness);
+
+            // Compute the number of blocks used in the tower
+            int shrineWidth = numberOfLayers * 2 - 1;
+
+            List<Long> actualBlocksUsed = new ArrayList<>();
+            for (int columnIndex = 0; columnIndex < numberOfLayers - 1; columnIndex++) {
+                long columnHeight = columnHeights.get(columnIndex);
+                long blocksRemoved = numberOfHighPriests * shrineWidth * columnHeight % numberOfAcolytes;
+                actualBlocksUsed.add(columnHeight - blocksRemoved);
+            }
+            actualBlocksUsed.add(columnHeights.get(numberOfLayers - 1));
+
+            long totalBlocksUsed = actualBlocksUsed.stream().mapToLong(l -> l).sum() * 2 - actualBlocksUsed.getFirst();
+
+            if (totalBlocksUsed > availableBlocks) {
+                return Long.toString(totalBlocksUsed - availableBlocks);
+            }
+
+        }
+
     }
 }

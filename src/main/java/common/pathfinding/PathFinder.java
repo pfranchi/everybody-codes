@@ -8,12 +8,13 @@ import common.geo.Cell2D;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public interface PathFinder<N> {
 
     int shortestDistance(N start, N end);
 
-    Map<N, Integer> shortestDistances(N start, Collection<? extends N> ends);
+    int shortestDistance(N start, Predicate<? super N> stoppingCondition);
 
     Map<N, Integer> shortestDistances(N start);
 
@@ -24,6 +25,8 @@ public interface PathFinder<N> {
     Map<N, List<N>> shortestPaths(N start);
 
     Table<N, N, List<N>> shortestPaths();
+
+    int maxDistance(N start);
 
     static PathFinder<Cell2D> forSimpleMaze(boolean[][] maze) {
         return new Maze2DPathFinder(maze);

@@ -1,5 +1,6 @@
 package common;
 
+import common.geo.Cell2D;
 import common.geo.PrincipalDirection2D;
 
 import java.util.Arrays;
@@ -31,6 +32,10 @@ public final class Grids {
 
     public static boolean isPositionInGrid(int numberOfRows, int numberOfColumns, int row, int col) {
         return 0 <= row && row < numberOfRows && 0 <= col && col < numberOfColumns;
+    }
+
+    public static boolean isPositionInGrid(int numberOfRows, int numberOfColumns, Cell2D cell) {
+        return isPositionInGrid(numberOfRows, numberOfColumns, cell.getRow(), cell.getColumn());
     }
 
     public static int getNumberOfTrueNeighbors(boolean[][] grid, int numberOfRows, int numberOfColumns, int row, int col) {
