@@ -6,6 +6,10 @@ import common.count.CharCount;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public final class Counts {
 
@@ -47,6 +51,10 @@ public final class Counts {
                 .map(entry -> new CharCount(entry.getElement(), entry.getCount()))
                 .sorted(sort.getCharCountCmp())
                 .toList();
+    }
+
+    public static <T> Collector<T, ?, Map<T, Long>> byFrequencyCount() {
+        return Collectors.groupingBy(Function.identity(), Collectors.counting());
     }
 
 }

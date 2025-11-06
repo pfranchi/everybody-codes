@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class EC2025Quest02 extends AbstractQuest implements MainEvent2025, Quest02 {
 
@@ -128,21 +129,24 @@ public class EC2025Quest02 extends AbstractQuest implements MainEvent2025, Quest
 
         Complex a = parse(inputLines.getFirst());
 
-        int count = 0;
-
-        for (int xDelta = 0; xDelta <= 1000; xDelta++) {
-            for (int yDelta = 0; yDelta <= 1000; yDelta++) {
-
-                Complex c = new Complex(a.x + xDelta, a.y + yDelta);
-
-                if (isEngraved(c, divisor)) {
-                    count++;
-                }
-
-            }
-        }
+        int count = IntStream
+                .rangeClosed(0, 1000)
+                .parallel()
+                .map(xDelta -> countEngravedForSameX(a, divisor, xDelta))
+                .sum();
 
         return Integer.toString(count);
+    }
+
+    private int countEngravedForSameX(Complex a, Complex divisor, int xDelta) {
+
+        return (int) IntStream
+                .rangeClosed(0, 1000)
+                .parallel()
+                .mapToObj(yDelta -> new Complex(a.x + xDelta, a.y + yDelta))
+                .filter(c -> isEngraved(c, divisor))
+                .count();
+
     }
 
 }
