@@ -23,7 +23,7 @@ public final class Counts {
 
         private Comparator<CharCount> getCharCountCmp() {
             return switch (this) {
-                case FIRST_APPEARANCE -> (a, b) -> 0; // no swap
+                case FIRST_APPEARANCE -> (_, _) -> 0; // no swap
                 case HIGHEST_COUNT -> Comparator.comparingInt(CharCount::count).reversed();
                 case LOWEST_COUNT -> Comparator.comparingInt(CharCount::count);
             };
