@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 import java.util.stream.Collector;
 
 public final class Statistics {
@@ -116,6 +117,34 @@ public final class Statistics {
 
     public static <K, V> IntMinMaxStatistics computeIntStatistics(Map<K, V> elements, ToIntFunction<? super Map.Entry<K, V>> mapper) {
         return elements.entrySet().stream().collect(computingIntStats(mapper));
+    }
+
+    public static LongMinMaxStatistics computeLongStatistics(Iterable<Long> longs) {
+        LongMinMaxStatistics statistics = new LongMinMaxStatistics();
+        for (long l: longs) {
+            statistics.accept(l);
+        }
+        return statistics;
+    }
+
+    public static <T> Collector<T, LongMinMaxStatistics, LongMinMaxStatistics> computingLongStats(ToLongFunction<? super T> mapper) {
+        return Collector.of(
+                LongMinMaxStatistics::new,
+                (r, t) -> r.accept(mapper.applyAsLong(t)),
+                (l, r) -> {
+                    l.combine(r);
+                    return l;
+                },
+                Collector.Characteristics.IDENTITY_FINISH
+        );
+    }
+
+    public static <T> LongMinMaxStatistics computeLongStatistics(Collection<? extends T> elements, ToLongFunction<? super T> mapper) {
+        return elements.stream().collect(computingLongStats(mapper));
+    }
+
+    public static <K, V> LongMinMaxStatistics computeLongStatistics(Map<K, V> elements, ToLongFunction<? super Map.Entry<K, V>> mapper) {
+        return elements.entrySet().stream().collect(computingLongStats(mapper));
     }
 
 }
