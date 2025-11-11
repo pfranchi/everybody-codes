@@ -78,4 +78,55 @@ public class InputService {
 
     }
 
+    public static void fetchAndUpdateEncryptedSinglePart(EventId eventId, int questNumber, QuestDetail questDetail, PartDetail partDetail) {
+
+        String seed = SeedService.getSeed();
+
+        String url = "https://everybody-codes.b-cdn.net/assets/" + eventId.number() + "/"
+                     + questNumber + "/input/" + seed + ".json";
+
+        String sessionCookie;
+        try {
+            sessionCookie = Files.readString(Path.of("src/main/resources/sessionCookie.txt"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpRequest request = HttpRequest.newBuilder().GET()
+                .header(HttpHeaders.COOKIE, "everybody-codes=" + sessionCookie)
+                .headers(HttpHeaders.USER_AGENT, "User 1940 Paolo Franchi (franchi.paolo94@gmail.com)")
+                .uri(URI.create(url))
+                .build();
+
+        HttpResponse<String> response;
+        try {
+            response = HTTP_CLIENT.send(request, RESPONSE_BODY_HANDLER);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        int statusCode = response.statusCode();
+
+        if (statusCode != 200) {
+            throw new RuntimeException("Encrypted input is not available");
+        }
+
+        JsonNode node;
+        try {
+            node = OBJECT_MAPPER.readTree(response.body());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        int partNumber = partDetail.getPartNumber();
+
+        String encrypted = node.get(Integer.toString(partNumber)).asText();
+
+        partDetail.setEncryptedObtained(true);
+        partDetail.setEncrypted(encrypted);
+
+        QuestDetailService.save(eventId, questNumber, questDetail);
+
+    }
+
 }
