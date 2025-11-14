@@ -9,7 +9,6 @@ import common.support.interfaces.Quest09;
 import common.support.params.ExecutionParameters;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -97,9 +96,13 @@ public class EC2025Quest09 extends AbstractQuest implements MainEvent2025, Quest
 
         List<List<DNASequence>> connectedComponents = Graphs.getConnectedComponents(graphBuilder.build());
 
-        List<DNASequence> connectedComponentWithMaxSize = Collections.max(connectedComponents, Comparator.comparingInt(List::size));
-
-        int sumOfIds = connectedComponentWithMaxSize.stream().mapToInt(DNASequence::id).sum();
+        int sumOfIds = connectedComponents
+                .stream()
+                .max(Comparator.comparingInt(List::size))
+                .orElseThrow()
+                .stream()
+                .mapToInt(DNASequence::id)
+                .sum();
 
         return Integer.toString(sumOfIds);
 
