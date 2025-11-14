@@ -42,6 +42,26 @@ public final class Graphs {
         return connectedComponents;
     }
 
+    public static <N> List<List<N>> getConnectedComponents(Graph<N> graph) {
+
+        List<List<N>> connectedComponents = new ArrayList<>();
+
+        Set<N> unvisitedNodes = new HashSet<>(graph.nodes());
+
+        while (!unvisitedNodes.isEmpty()) {
+
+            N unvisitedNode = unvisitedNodes.iterator().next();
+            Iterable<N> reachableNodes = Traverser.forGraph(graph).breadthFirst(unvisitedNode);
+            List<N> connectedComponent = Lists.newArrayList(reachableNodes);
+            connectedComponent.forEach(unvisitedNodes::remove);
+            connectedComponents.add(connectedComponent);
+
+        }
+
+        return connectedComponents;
+
+    }
+
     public static <N> List<List<N>> getConnectedComponents(ValueGraph<N, ?> valueGraph) {
         List<List<N>> connectedComponents = new ArrayList<>();
 
