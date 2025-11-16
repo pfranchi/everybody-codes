@@ -1,10 +1,8 @@
 package events.y2025;
 
 import common.AbstractQuestTest;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import common.support.params.ExecutionIntParameter;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -18,43 +16,44 @@ class EC2025Quest10Test extends AbstractQuestTest {
     @Test
     @Order(1)
     void part1Examples() {
-        List<String> actualResults = solution.executeExamples(1);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> actualResults = solution.executeExamples(1, new ExecutionIntParameter(3));
+        List<String> expectedResults = List.of("27");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(2)
     void part1() {
-        executeQuest(solution, 1, "Not implemented");
+        executeQuest(solution, 1, "162");
     }
 
     @Test
     @Order(3)
     void part2Examples() {
-        List<String> actualResults = solution.executeExamples(2);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> actualResults = solution.executeExamples(2, new ExecutionIntParameter(3));
+        List<String> expectedResults = List.of("27");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(4)
     void part2() {
-        executeQuest(solution, 2, "Not implemented");
+        executeQuest(solution, 2, "1689");
     }
 
     @Test
     @Order(5)
     void part3Examples() {
         List<String> actualResults = solution.executeExamples(3);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> expectedResults = List.of("15", "8", "44", "4406", "13033988838");
         assertEquals(expectedResults, actualResults);
     }
 
+    @Disabled("takes approximately 12 seconds")
     @Test
     @Order(6)
     void part3() {
-        executeQuest(solution, 3, "Not implemented");
+        executeQuest(solution, 3, "7493438324610");
     }
 
 
