@@ -105,6 +105,15 @@ public class EC2025Quest15 extends AbstractQuest implements MainEvent2025, Quest
     }
 
     private String optimizedVersion(String input) {
+
+        // TODO
+        /*
+            Sometimes the best path may need to pass over some block borders. This implementation
+            does not account for that and gives a higher result.
+            For examples 2, 3 and 4 and for the real input (for part 3) this implementation gives
+            the right answer
+         */
+
         MutableCell2D currentLocation = MutableCell2D.of(0, 0);
         CardinalDirection2D currentFacing = NORTH;
 
