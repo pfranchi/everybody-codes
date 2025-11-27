@@ -41,7 +41,7 @@ public class RefreshInputApp {
     private static void forceRefreshMultipleQuests() {
         EventId eventId = new EventId(EventType.MAIN_EVENT, 2025);
 
-        for (int questNumber = 8; questNumber <= 20; questNumber++) {
+        for (int questNumber = 19; questNumber <= 19; questNumber++) {
 
             QuestDetail questDetail = QuestDetailService.getQuestDetail(eventId, questNumber);
 

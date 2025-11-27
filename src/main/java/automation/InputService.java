@@ -25,7 +25,7 @@ public class InputService {
 
         String seed = SeedService.getSeed();
 
-        String url = "https://everybody-codes.net/assets/" + eventId.number() + "/"
+        String url = "https://everybody.codes/assets/" + eventId.number() + "/"
                 + questNumber + "/input/" + seed + ".json";
 
         String sessionCookie;
@@ -82,7 +82,7 @@ public class InputService {
 
         String seed = SeedService.getSeed();
 
-        String url = "https://everybody-codes.net/assets/" + eventId.number() + "/"
+        String url = "https://everybody.codes/assets/" + eventId.number() + "/"
                      + questNumber + "/input/" + seed + ".json";
 
         String sessionCookie;
