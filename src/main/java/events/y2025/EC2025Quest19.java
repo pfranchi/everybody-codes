@@ -51,12 +51,14 @@ public class EC2025Quest19 extends AbstractQuest implements MainEvent2025, Quest
 
         }
 
-        int minimumNumberOfFlaps = mininumNumberOfTotalFlaps(startingPosition, walls, 0).orElseThrow();
+        Set<ImmutableCoordinate2D> cache = new HashSet<>(); // this cache stores the positions encountered in the search which do not lead to a valid solution
+
+        int minimumNumberOfFlaps = mininumNumberOfTotalFlaps(cache, startingPosition, walls, 0).orElseThrow();
 
         return Integer.toString(minimumNumberOfFlaps);
     }
 
-    private OptionalInt mininumNumberOfTotalFlaps(ImmutableCoordinate2D currentPosition,
+    private OptionalInt mininumNumberOfTotalFlaps(Set<ImmutableCoordinate2D> cache, ImmutableCoordinate2D currentPosition,
                                                   NavigableMap<Integer, Wall> remainingWalls,
                                                   int currentNumberOfFlaps) {
 
@@ -79,14 +81,18 @@ public class EC2025Quest19 extends AbstractQuest implements MainEvent2025, Quest
 
                 ImmutableCoordinate2D nextPosition = ImmutableCoordinate2D.of(nextWallXCoordinate, yAtWall);
 
-                NavigableMap<Integer, Wall> nextRemainingWalls = remainingWalls.tailMap(nextWallXCoordinate, false);
+                if (!cache.contains(nextPosition)) {
+                    NavigableMap<Integer, Wall> nextRemainingWalls = remainingWalls.tailMap(nextWallXCoordinate, false);
 
-                OptionalInt totalNumberOfFlaps = mininumNumberOfTotalFlaps(nextPosition,
-                        nextRemainingWalls,
-                        currentNumberOfFlaps + numberOfFlapsInThisInterval);
+                    OptionalInt totalNumberOfFlaps = mininumNumberOfTotalFlaps(cache, nextPosition,
+                            nextRemainingWalls,
+                            currentNumberOfFlaps + numberOfFlapsInThisInterval);
 
-                if (totalNumberOfFlaps.isPresent()) {
-                    return totalNumberOfFlaps;
+                    if (totalNumberOfFlaps.isPresent()) {
+                        return totalNumberOfFlaps;
+                    } else {
+                        cache.add(nextPosition);
+                    }
                 }
 
             }

@@ -48,7 +48,6 @@ class EC2025Quest19Test extends AbstractQuestTest {
         assertEquals(expectedResults, actualResults);
     }
 
-    @Disabled("Implementation takes about 20 seconds")
     @Test
     @Order(6)
     void part3() {
