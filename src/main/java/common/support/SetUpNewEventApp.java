@@ -13,32 +13,26 @@ public class SetUpNewEventApp {
     public static void main(String[] args) {
 
         try {
-            creaEstemporaneo();
+            creaGenerale();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    private static void creaGenerale() {
+    private static void creaGenerale() throws IOException {
 
-        EventType type = EventType.MAIN_EVENT;
-        int year = 2025;
-        int numberOfQuests = 20;
+        EventType type = EventType.STORY;
+        int year = 3;
+        int numberOfQuests = 3;
 
         EventId eventId = new EventId(type, year);
 
-        try {
-
-            createQuestDetails(eventId, numberOfQuests);
-            createInterfaces(eventId, numberOfQuests);
-            createChallenges(eventId, numberOfQuests);
-            createExamples(eventId, numberOfQuests);
-            createTests(eventId, numberOfQuests);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        createQuestDetails(eventId, numberOfQuests);
+        createInterfaces(eventId, numberOfQuests);
+        createChallenges(eventId, numberOfQuests);
+        createExamples(eventId, numberOfQuests);
+        createTests(eventId, numberOfQuests);
 
     }
 
