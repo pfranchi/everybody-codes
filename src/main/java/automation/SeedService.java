@@ -24,7 +24,7 @@ public class SeedService {
         Path path = Path.of("src/main/resources/seed.txt");
         if (!Files.exists(path)) {
 
-            String url = "https://everybody.codes/api/user/me";
+            String url = "https://api.everybody.codes/user/me";
 
             String sessionCookie;
             try {

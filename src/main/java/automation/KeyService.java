@@ -33,7 +33,7 @@ public class KeyService {
 
     public static String getAESKey(EventId eventId, int questNumber, int part) {
 
-        String url = "https://everybody.codes/api/event/" + eventId.number() + "/quest/" + questNumber;
+        String url = "https://api.everybody.codes/event/" + eventId.number() + "/quest/" + questNumber;
 
         String sessionCookie;
         try {
@@ -71,8 +71,17 @@ public class KeyService {
         JsonNode keyNode = node.get("key" + part);
 
         if (keyNode == null) {
-            throw new RuntimeException("Decryption key is not available. (Either because the puzzle has not " +
-                    "yet been unlocked or because the previous part has not been solved)");
+
+            String text;
+
+            JsonNode msToStartNode = node.get("msToStart");
+            if (msToStartNode != null) {
+                text = "Quest will unlock in " + toHumanReadableTime(Integer.parseInt(msToStartNode.asText()));
+            } else {
+                text = "Decryption key is not available. (Either because the puzzle has not yet been unlocked or because the previous part has not been solved)";
+            }
+
+            throw new RuntimeException(text);
         }
 
         return keyNode.asText();
@@ -81,7 +90,7 @@ public class KeyService {
 
     public static String retrieveCorrectAnswer(EventId eventId, int questNumber, int part) {
 
-        String url = "https://everybody.codes/api/event/" + eventId.number() + "/quest/" + questNumber;
+        String url = "https://api.everybody.codes/event/" + eventId.number() + "/quest/" + questNumber;
 
         String sessionCookie;
         try {
@@ -149,6 +158,33 @@ public class KeyService {
                  InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public static String toHumanReadableTime(int milliseconds) {
+
+        int seconds = milliseconds / 1000;
+        int minutes =  seconds / 60;
+        int hours = minutes / 60;
+        int days = hours / 24;
+
+        if (minutes == 0) {
+            // Display only seconds and milliseconds
+            return seconds + " second" + (seconds != 1 ? "s" : "") + " " + (milliseconds % 1000) + " milliseconds";
+        }
+
+        if (hours == 0) {
+            // Display only minutes and seconds
+            return minutes + " minute" + (minutes != 1 ? "s" : "") + " " + (seconds % 60) + " seconds";
+        }
+
+        if (days == 0) {
+            // Display only hours and minutes
+            return hours + " hour" + (hours != 1 ? "s" : "") + " " + (minutes % 60) + " minutes";
+        }
+
+        // Display only days and hours
+        return days + " day" + (days != 1 ? "s" : "") + " " + (hours % 24) + " hours";
 
     }
 

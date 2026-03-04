@@ -24,7 +24,7 @@ public class AnswerService {
 
     public static AnswerApiResponseModel callAnswerApi(PuzzleId puzzleId, String answer) throws CorrectAnswerAlreadyPosted {
 
-        String url = "https://everybody.codes/api/event/" + puzzleId.eventId().number() + "/quest/"
+        String url = "https://api.everybody.codes/event/" + puzzleId.eventId().number() + "/quest/"
                 + puzzleId.questNumber() + "/part/" + puzzleId.part() + "/answer";
 
         String sessionCookie;
