@@ -15,7 +15,57 @@ public class Story03Quest01 extends AbstractQuest implements Story03, Quest01 {
     @Override
     protected String solvePart1(String input, List<String> inputLines, ExecutionParameters executionParameters) {
 
-        int total = 0;
+        Map<ColorScale, Integer> colorScales = parseInput(inputLines);
+
+        int total = colorScales
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isGreenDominant())
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+
+        return Integer.toString(total);
+    }
+
+    @Override
+    protected String solvePart2(String input, List<String> inputLines, ExecutionParameters executionParameters) {
+        NavigableMap<ColorScale, Integer> colorScalesToIdentifiers = parseInput(inputLines);
+        return String.valueOf(colorScalesToIdentifiers.firstEntry().getValue());
+    }
+
+    @Override
+    protected String solvePart3(String input, List<String> inputLines, ExecutionParameters executionParameters) {
+
+        Map<ColorScale, Integer> colorScales =  parseInput(inputLines);
+
+        Multimap<Group, Integer> identifiersByGroup = ArrayListMultimap.create();
+
+        colorScales.forEach((colorScale, identifier) -> {
+            Optional<Group> group = colorScale.getGroup();
+            group.ifPresent(value -> identifiersByGroup.put(value, identifier));
+        });
+
+        int maxOccurrences = Integer.MIN_VALUE;
+        int sumOfIdentifiersOfCurrentBest = 0;
+
+        for (Map.Entry<Group, Collection<Integer>> entry: identifiersByGroup.asMap().entrySet()) {
+
+            int occurrences = entry.getValue().size();
+
+            if (occurrences > maxOccurrences) {
+                // Found new best
+                maxOccurrences = occurrences;
+                sumOfIdentifiersOfCurrentBest = entry.getValue().stream().mapToInt(i -> i).sum();
+            }
+
+        }
+
+        return Integer.toString(sumOfIdentifiersOfCurrentBest);
+    }
+
+    private NavigableMap<ColorScale, Integer> parseInput(List<String> inputLines) {
+
+        NavigableMap<ColorScale, Integer> colorScalesToIdentifiers = new TreeMap<>();
 
         for (String line: inputLines) {
 
@@ -35,15 +85,15 @@ public class Story03Quest01 extends AbstractQuest implements Story03, Quest01 {
 
             }
 
-            int greenValue = valuesByColor.get('g');
+            ColorScale colorScale = new ColorScale(valuesByColor.get('r'), valuesByColor.get('g'),
+                    valuesByColor.get('b'), valuesByColor.getOrDefault('s', 0));
 
-            if (greenValue > valuesByColor.get('r') && greenValue > valuesByColor.get('b')) {
-                total += identifier;
-            }
+            colorScalesToIdentifiers.put(colorScale, identifier);
 
         }
 
-        return Integer.toString(total);
+        return colorScalesToIdentifiers;
+
     }
 
     private int decode(String colorComponent) {
@@ -54,56 +104,40 @@ public class Story03Quest01 extends AbstractQuest implements Story03, Quest01 {
         int total = 0;
 
         for (char c: chars) {
-
             if (Character.isUpperCase(c)) {
                 total += currentPowerOf2;
             }
-
-            currentPowerOf2 /= 2;
-
+            currentPowerOf2 >>= 1;
         }
 
         return total;
 
     }
 
-    @Override
-    protected String solvePart2(String input, List<String> inputLines, ExecutionParameters executionParameters) {
+    private record ColorScale(int red, int green, int blue, int shine) implements Comparable<ColorScale> {
 
-        Comparator<ColorScale> cmp = Comparator
-                .comparingInt(ColorScale::shine).reversed()
-                .thenComparing(ColorScale::getDarkness);
-
-        NavigableMap<ColorScale, Integer> colorScalesToIdentifiers = new TreeMap<>(cmp);
-
-        for (String line:  inputLines) {
-
-            String[] parts = line.split(":");
-            int identifier = Integer.parseInt(parts[0]);
-
-            String[] colorComponents = parts[1].split(" ");
-
-            Map<Character, Integer> valuesByColor =  new HashMap<>();
-
-            for (String colorComponent:  colorComponents) {
-
-                char color = Character.toLowerCase(colorComponent.charAt(0));
-                int value = decode(colorComponent);
-
-                valuesByColor.put(color, value);
-
-            }
-
-            ColorScale colorScale = new ColorScale(valuesByColor.get('r'), valuesByColor.get('g'), valuesByColor.get('b'), valuesByColor.get('s'));
-
-            colorScalesToIdentifiers.put(colorScale, identifier);
-
+        @Override
+        public int compareTo(@Nonnull ColorScale o) {
+            return Comparator
+                    .comparingInt(ColorScale::shine).reversed()
+                    .thenComparing(ColorScale::getDarkness)
+                    .thenComparingInt(ColorScale::red)
+                    .thenComparingInt(ColorScale::green)
+                    .thenComparingInt(ColorScale::blue)
+                    .compare(this, o);
         }
 
-        return String.valueOf(colorScalesToIdentifiers.firstEntry().getValue());
-    }
+        public boolean isRedDominant() {
+            return red > green && red > blue;
+        }
 
-    private record ColorScale(int red, int green, int blue, int shine) {
+        public boolean isGreenDominant() {
+            return green > red && green > blue;
+        }
+
+        public boolean isBlueDominant() {
+            return blue > red && blue > green;
+        }
 
         public int getDarkness() {
             return red + green + blue;
@@ -115,30 +149,18 @@ public class Story03Quest01 extends AbstractQuest implements Story03, Quest01 {
                 return Optional.empty();
             }
 
-            int maxValue = Integer.max(red, Integer.max(green, blue));
-            int countOfValuesEqualToMax = 0;
-            if (red == maxValue) {
-                countOfValuesEqualToMax++;
-            }
-            if (green == maxValue) {
-                countOfValuesEqualToMax++;
-            }
-            if (blue == maxValue) {
-                countOfValuesEqualToMax++;
-            }
-
-            if (countOfValuesEqualToMax > 1) {
+            if (!isRedDominant() && !isGreenDominant() && !isBlueDominant()) {
                 return Optional.empty();
             }
 
-            char dominantColor = 'g';
+            char dominantColor;
 
-            if (blue > red && blue > green) {
-                dominantColor = 'b';
-            }
-
-            if (red > blue && red > green) {
+            if (isRedDominant()) {
                 dominantColor = 'r';
+            } else if (isGreenDominant()) {
+                dominantColor = 'g';
+            } else {
+                dominantColor = 'b';
             }
 
             boolean isShiny = shine >= 33;
@@ -149,81 +171,5 @@ public class Story03Quest01 extends AbstractQuest implements Story03, Quest01 {
     }
 
     private record Group(char dominantColor, boolean isShiny) {}
-
-    @Override
-    protected String solvePart3(String input, List<String> inputLines, ExecutionParameters executionParameters) {
-
-        //inputLines.forEach(this::log);
-
-        Multimap<Group, Long> identifiersByGroup = ArrayListMultimap.create();
-
-        for (String line:  inputLines) {
-
-            String[] parts = line.split(":");
-            long identifier = Long.parseLong(parts[0]);
-
-            String[] colorComponents = parts[1].split(" ");
-
-            Map<Character, Integer> valuesByColor =  new HashMap<>();
-
-            for (String colorComponent:  colorComponents) {
-
-                char color = Character.toLowerCase(colorComponent.charAt(0));
-                int value = decode(colorComponent);
-
-                valuesByColor.put(color, value);
-
-            }
-
-            ColorScale colorScale = new ColorScale(valuesByColor.get('r'), valuesByColor.get('g'), valuesByColor.get('b'), valuesByColor.get('s'));
-            Optional<Group> group = colorScale.getGroup();
-
-
-            /*
-            log("Line {}. Color scale = {}. Group = {}", line,  colorScale,
-                    group.map(Objects::toString).orElse("Unassigned")
-            );
-
-
-
-             */
-
-            //colorScalesToIdentifiers.put(colorScale, identifier);
-
-            group.ifPresent(value -> identifiersByGroup.put(value, identifier));
-
-        }
-
-        /*
-        emptyLine();
-        log("Found the following groups:");
-        identifiersByGroup.asMap().entrySet().forEach(this::log);
-
-         */
-
-        int maxOccurrences = Integer.MIN_VALUE;
-        long sumOfIdentifiersOfCurrentBest = 0;
-
-        for (Map.Entry<Group, Collection<Long>> entry: identifiersByGroup.asMap().entrySet()) {
-
-            //log("Group {} with {} occurrences", entry.getKey(), entry.getValue().size());
-
-            int occurrences = entry.getValue().size();
-
-            if (occurrences > maxOccurrences) {
-
-                //log("Found new max for group {} with {} occurrences", entry.getKey(),  occurrences);
-
-                // Found new best
-                maxOccurrences = occurrences;
-                sumOfIdentifiersOfCurrentBest = entry.getValue().stream().mapToLong(i -> i).sum();
-            }
-
-        }
-
-        //log("Sum of identifiers = {}", sumOfIdentifiersOfCurrentBest);
-
-        return Long.toString(sumOfIdentifiersOfCurrentBest);
-    }
 
 }
