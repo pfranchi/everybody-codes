@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.common.net.HttpHeaders;
 import com.google.gson.Gson;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,6 +16,7 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class AnswerService {
 
@@ -22,7 +24,8 @@ public class AnswerService {
     private static final HttpResponse.BodyHandler<String> RESPONSE_BODY_HANDLER = HttpResponse.BodyHandlers.ofString();
     private static final Gson GSON = new Gson();
 
-    public static AnswerApiResponseModel callAnswerApi(PuzzleId puzzleId, String answer) throws CorrectAnswerAlreadyPosted {
+    public static AnswerApiResponseModel callAnswerApi(PuzzleId puzzleId, String answer, @Nullable Consumer<String> logger)
+            throws CorrectAnswerAlreadyPosted {
 
         String url = "https://api.everybody.codes/event/" + puzzleId.eventId().number() + "/quest/"
                 + puzzleId.questNumber() + "/part/" + puzzleId.part() + "/answer";
@@ -47,11 +50,19 @@ public class AnswerService {
                 .uri(URI.create(url))
                 .build();
 
+        if (logger != null) {
+            logger.accept("/answer REQUEST CREATED: " + request);
+        }
+
         HttpResponse<String> response;
         try {
             response = HTTP_CLIENT.send(request, RESPONSE_BODY_HANDLER);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
+        }
+
+        if (logger != null) {
+            logger.accept("/answer RESPONSE RECEIVED: " + response);
         }
 
         if (response.statusCode() == 409) {

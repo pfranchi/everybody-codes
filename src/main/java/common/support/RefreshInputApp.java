@@ -18,13 +18,13 @@ public class RefreshInputApp {
         int questNumber = 1;
         int partNumber = 3;
 
-        forceUpdateSinglePart(eventId, questNumber, partNumber);
+        //forceUpdateSinglePart(eventId, questNumber, partNumber);
 
         //forceRefreshSingleQuest(eventId, questNumber);
 
-        int fromQuest = 1;
+        int fromQuest = 2;
         int toQuest = 3;
-        //forceRefreshMultipleQuests(eventId, fromQuest, toQuest);
+        forceRefreshMultipleQuests(eventId, fromQuest, toQuest);
 
     }
 

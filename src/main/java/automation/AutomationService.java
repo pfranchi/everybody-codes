@@ -6,9 +6,11 @@ import automation.model.PartDetail;
 import automation.model.QuestDetail;
 import com.google.gson.Gson;
 
+import javax.annotation.Nullable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AutomationService {
 
@@ -48,7 +50,7 @@ public class AutomationService {
 
     }
 
-    public static boolean postAnswer(PuzzleId puzzleId, QuestDetail questDetail, PartDetail partDetail, String answer) {
+    public static boolean postAnswer(PuzzleId puzzleId, QuestDetail questDetail, PartDetail partDetail, String answer, @Nullable Consumer<String> logger) {
 
         if ("Not implemented".equals(answer)) {
             return false;
@@ -86,7 +88,7 @@ public class AutomationService {
         // Call API
         AnswerApiResponseModel responseModel;
         try {
-            responseModel = AnswerService.callAnswerApi(puzzleId, answer);
+            responseModel = AnswerService.callAnswerApi(puzzleId, answer, logger);
         } catch (CorrectAnswerAlreadyPosted e) {
 
             // This is used when the correct answer has already been posted but the QuestDetail is not updated accordingly.

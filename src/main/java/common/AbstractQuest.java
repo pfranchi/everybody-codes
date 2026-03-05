@@ -93,7 +93,7 @@ public abstract class AbstractQuest implements Event, Quest {
         log("TIME = {}", toDisplayedTime(end - start));
         log("END " + puzzleId);
 
-        boolean isAnswerCorrect = AutomationService.postAnswer(puzzleId, questDetail, partDetail, answer);
+        boolean isAnswerCorrect = AutomationService.postAnswer(puzzleId, questDetail, partDetail, answer, this::log);
 
         log("Answer: {}", isAnswerCorrect ? "CORRECT" : "WRONG");
         emptyLine();

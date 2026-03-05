@@ -43,7 +43,7 @@ class AutomationServiceTest {
 
         String answer = "1317";
 
-        boolean isCorrect = AutomationService.postAnswer(puzzleId, questDetail, partDetail, answer);
+        boolean isCorrect = AutomationService.postAnswer(puzzleId, questDetail, partDetail, answer, null);
 
         assertTrue(isCorrect);
 
