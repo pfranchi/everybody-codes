@@ -5,7 +5,6 @@ import com.google.common.graph.Graph;
 import com.google.common.graph.ValueGraph;
 import common.geo.Cell2D;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;

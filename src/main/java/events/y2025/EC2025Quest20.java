@@ -5,12 +5,10 @@ import common.geo.CardinalDirection2D;
 import common.geo.ImmutableCell2D;
 import common.grids.Grids;
 import common.pathfinding.algorithms.PathFindingAlgorithms;
-import common.support.interfaces.Quest20;
 import common.support.interfaces.MainEvent2025;
+import common.support.interfaces.Quest20;
 import common.support.params.ExecutionParameters;
 
-import javax.smartcardio.Card;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

@@ -1,10 +1,10 @@
 package events.y2025;
 
 import common.AbstractQuest;
-import common.Grids;
 import common.geo.CardinalDirection2D;
 import common.geo.Cell2D;
 import common.geo.ImmutableCell2D;
+import common.grids.Grids;
 import common.support.interfaces.MainEvent2025;
 import common.support.interfaces.Quest12;
 import common.support.params.ExecutionParameters;

@@ -6,6 +6,8 @@ import common.geo.PrincipalDirection2D;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public final class Grids {
 

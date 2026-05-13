@@ -1,7 +1,10 @@
 package events.y2024;
 
 import common.AbstractQuestTest;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Collections;
 import java.util.List;

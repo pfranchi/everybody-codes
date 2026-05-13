@@ -4,7 +4,8 @@ import common.geo.Cell2D;
 import common.geo.ImmutableCell2D;
 import common.pathfinding.algorithms.PathFindingAlgorithms;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 class Maze2DPathFinder extends Cell2DPathFinder {

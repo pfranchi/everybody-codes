@@ -19,28 +19,28 @@ class Story03Quest03Test extends AbstractQuestTest {
     @Order(1)
     void part1Examples() {
         List<String> actualResults = solution.executeExamples(1);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> expectedResults = List.of("43");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(2)
     void part1() {
-        executeQuest(solution, 1, "Not implemented");
+        executeQuest(solution, 1, "6118");
     }
 
     @Test
     @Order(3)
     void part2Examples() {
         List<String> actualResults = solution.executeExamples(2);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> expectedResults = List.of("50");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(4)
     void part2() {
-        executeQuest(solution, 2, "Not implemented");
+        executeQuest(solution, 2, "319810");
     }
 
     @Test

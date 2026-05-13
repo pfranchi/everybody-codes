@@ -3,7 +3,10 @@ package common.pathfinding;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 abstract class BaseGraphPathFinder<N> implements PathFinder<N> {
 

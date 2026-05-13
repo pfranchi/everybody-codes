@@ -2,8 +2,8 @@ package events.y2025;
 
 import common.AbstractQuest;
 import common.geo.ImmutableCoordinate2D;
-import common.support.interfaces.Quest19;
 import common.support.interfaces.MainEvent2025;
+import common.support.interfaces.Quest19;
 import common.support.params.ExecutionParameters;
 
 import java.util.*;
