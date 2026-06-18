@@ -1,0 +1,15 @@
+HEADS AAA
+
+START *** FIRST *** USD
+FIRST *** TOP *+* RRR
+
+TOP ___ STOP *** SSS
+BOTTOM ___ STOP *** SSS
+TOP *.@ TOP *+* RRR
+TOP *.. DOWN *+* DDD
+DOWN **! DOWN *+* DDD
+DOWN **_ BOTTOM *+* RRR
+BOTTOM @.* BOTTOM *+* RRR
+BOTTOM ..* UP *+* UUU
+UP !** UP *+* UUU
+UP _** TOP *+* RRR

@@ -1,0 +1,39 @@
+HEADS AAAA
+
+START #*** START **** LSUU
+START _*** START a*** SSRR
+START a*** START b*** SSSR
+
+START b#** START b*** SRRR
+START b~** START b*** SRRR
+START b=** START c~** SRRR
+START b_** STOP _*** SSSS
+
+START c=** START c~** SRRR
+START c#** START d*** SLLL
+
+START d~** START d*** SLLL
+START d#** START e*** SRRR
+
+START e*** START f*** SRRR
+START f~** START g*** SDDD
+START f#** START b*** SRRR
+START f_** START b*** SUUU
+
+START g*#_ STOP _*** SSSS
+START g**~ START h~** SRRR
+START g*~# START i~** SRRR
+START g*## START l*** SLLL
+START g*__ START i*** SUUU
+START g*~_ START i~** SUUU
+START g*#= START i*** SUUU
+
+START h**~ START h~** SRRR
+START h**# START l~** SLLL
+START h**_ START l~** SLLL
+
+START l~** START l*** SLLL
+START l_** START e*** SRRR
+
+START i~** START i*** SUUU
+START i_** START b*** SDDD

@@ -1,0 +1,15 @@
+HEADS AAAAA
+
+START ***** MOVE1 ***** SRRDD
+MOVE1 ***** READY ***** SSRSD
+
+READY #**** READY ***** RRRRR
+READY =**** POND1 ~**** RRRRR
+POND1 #**** READY ***** RRRRR
+POND1 ==*** POND2 ~**~* RRRRR
+POND1 =#*** READY ~**** RRRRR
+POND2 =#*** READY ~**** RRRRR
+POND2 ==#** POND1 ~**~* RRRRR
+POND2 ===** POND2 ~**~~ RRRRR
+
+READY _**** STOP ***** SSSSS

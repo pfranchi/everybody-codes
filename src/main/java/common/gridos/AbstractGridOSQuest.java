@@ -57,19 +57,6 @@ public abstract class AbstractGridOSQuest {
             throw new RuntimeException(e);
         }
 
-        /*
-        String partPath = folderPath + "/program_v2.txt";
-
-        GridOSProgram program = new GridOSProgram();
-        List<String> lines;
-        try {
-            lines = Files.readAllLines(Path.of(partPath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        program.loadProgram("Program", lines);
-        */
-
         return programs;
     }
 

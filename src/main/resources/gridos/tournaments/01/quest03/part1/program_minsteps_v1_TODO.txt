@@ -1,0 +1,5 @@
+HEADS AAAABBBB
+START ######## START ******** SRSDLSDS
+START **#_**_# START ******** RRDRLLLD
+START **__**__ START ***.**.* RRRRLLLL
+START **._**._ START ***.**.* RRRRLLLL

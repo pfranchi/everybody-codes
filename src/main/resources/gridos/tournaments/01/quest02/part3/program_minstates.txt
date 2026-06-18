@@ -1,0 +1,30 @@
+HEADS AAAAAA
+
+START A***** START ****** LSDSRU
+START B***** START ****** LSDSRU
+START _***** START M***** SSSSSS
+START M***** START a***** SSSSSU
+
+START aAA*** START a****@ SDDSSR
+START aBB*** START a****@ SDDSSR
+START aAB*** START a***** SDDSSS
+START aBA*** START a***** SDDSSS
+
+START a*_*** START b***** SRRSSS
+
+START b_**** START c***** SSSSSS
+START b!**** START d***** SUUSSS
+START d!**** START d***** SUUSSS
+START d_**** START a***** SDDSSS
+
+START c**AA* START c**_*@ SSSRRR
+START c**BB* START c**_*@ SSSRRR
+START c**AB* START c**_** SSSRRS
+START c**BA* START c**_** SSSRRS
+
+START c***_* START e**_** SSSDDS
+
+START e**_** STOP _***** SSSSSS
+START e**!** START f***** SSSLLS
+START f**!** START f***** SSSLLS
+START f**_** START c***** SSSRRS

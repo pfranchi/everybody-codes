@@ -1,0 +1,64 @@
+HEADS AAAA
+
+START #### START **** LLSD
+START __** START z*** LSSS
+START _z** START a_** SSRR
+
+START a*=* START a*** SSDD
+START a*_* START b*** SSUU
+START b*!* START b*** SSUU
+START b*_* START c*** SSDD
+START c*** START a*** SSRR
+
+START a*|* START d*** SSDD
+START d*!* START d*1* SSDD
+START d*_* START e*** SSUU
+START e*1* START e*** SSUU
+START e*|* START f*** SSRR
+START e*=* START e*1* SSUU
+START e*_* START g*** SSDD
+
+START f**! START f*=* SSRR
+START f**_ START h*** SSLL
+START h*=* START h*** SSLL
+START h*|* START e*** SSUU
+
+START g*** START i*** SSRR
+
+START i*=* START i*** SSDD
+START i*_* START j*** SSUU
+START j*!* START j*** SSUU
+START j*_* START g*** SSDD
+
+START i*|* START k*2* SSDD
+START k*!* START k*2* SSDD
+START k*_* START l*** SSUU
+START l*!* START l*2* SSUU
+START l*_* START m*** SSDD
+
+START m*!* START n*|* SSRR
+START n*!* START n*_* SSRR
+START n*_* START o*** SSLL
+START o*_* START o*** SSLL
+START o*!* START m*** SSDD
+START m*_* START p*** SSUU
+
+START p*!* START p*** SSLL
+START p*_* START q*** SSRR
+
+START q*#* START q*** SSRR
+START q*=* START q*** SSRR
+START q*1* START r*=* SSLL
+START q*|* START s*** SSRR
+START q*_* STOP _*** SSSS
+
+START r*!* START r*** SSLL
+START r*_* START t*** SSRR
+START t*** START q*** SSUU
+
+START s*!* START s*_* SSRR
+START s*_* START u*** SSLL
+START u*_* START u*** SSLL
+START u*|* START u*** SSLL
+START u*=* START u*** SSLL
+START u*#* START q*** SSUU

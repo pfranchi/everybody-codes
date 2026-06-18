@@ -1,0 +1,27 @@
+HEADS AAAAAAAA
+
+START ........ START ******** LULUSDLR
+START ___***** START z******* LUSSSSSS
+START __z***** START 1a_*+*** SSSRRRRR
+
+START 1a**!@** START 1a**+*** SSSRRRRR
+START 1a**!.** START 1b**+*** SSSDDDDD
+START 1b**!*** START 1c**+*** SSSDDDDD
+START 1c**!*** START 1d**+*** SSSRRRRR
+START 1d*@!*** START 1d**+*** SSSRRRRR
+START 1d*.!*** START 1e**+*** SSSUUUUU
+START 1e**!*** START 1f**+*** SSSUUUUU
+START 1f**!*** START 1a**+*** SSSRRRRR
+
+START 1***_*** START 2a****** SSSLLLLL
+
+START 2a**!*@* START 2a**+*** SSSDDDDD
+START 2a**!*.* START 2b**+*** SSSLLLLL
+START 2b**!*** START 2c**+*** SSSLLLLL
+START 2c**!*** START 2d**+*** SSSDDDDD
+START 2d**!**@ START 2d**+*** SSSDDDDD
+START 2d**!**. START 2e**+*** SSSRRRRR
+START 2e**!*** START 2f**+*** SSSRRRRR
+START 2f**!*** START 2a**+*** SSSDDDDD
+
+START 2***_*** STOP __****** SSSSSSSS

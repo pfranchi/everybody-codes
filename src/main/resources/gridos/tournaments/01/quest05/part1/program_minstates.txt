@@ -1,0 +1,15 @@
+HEADS AAAA
+
+START .... START **** LUSD
+START _*** START a*+* SRRR
+
+START a*!@ START a*+* SRRR
+START a*!. START b*+* SDDD
+START b*!* START c*+* SDDD
+START c*!* START d*+* SRRR
+START d@!* START d*+* SRRR
+START d.!* START e*+* SUUU
+START e*!* START f*+* SUUU
+START f*!* START a*+* SRRR
+
+START !___ STOP _*** SSSS
