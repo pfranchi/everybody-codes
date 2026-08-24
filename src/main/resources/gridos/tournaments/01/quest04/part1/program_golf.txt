@@ -1,0 +1,6 @@
+HEADS AAA
+START *** MOVE *** SRR
+MOVE *** READY *** SSR
+READY #=* READY _#* DDD
+READY #|* READY _#| DDD
+READY _** STOP *** SSS

@@ -15,16 +15,16 @@ public class RefreshInputApp {
         int eventNumber = 3;
         EventId eventId = new EventId(eventType, eventNumber);
 
-        int questNumber = 1;
+        int questNumber = 3;
         int partNumber = 3;
 
-        //forceUpdateSinglePart(eventId, questNumber, partNumber);
+        forceUpdateSinglePart(eventId, questNumber, partNumber);
 
         //forceRefreshSingleQuest(eventId, questNumber);
 
         int fromQuest = 2;
         int toQuest = 3;
-        forceRefreshMultipleQuests(eventId, fromQuest, toQuest);
+        //forceRefreshMultipleQuests(eventId, fromQuest, toQuest);
 
     }
 
