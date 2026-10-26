@@ -46,6 +46,11 @@ public record ImmutableCoordinate2D(int x, int y) implements Coordinate2D, Compa
     }
 
     @Override
+    public ImmutableCoordinate2D add(Direction2D other) {
+        return add(other.getUnitVectorCoordinate());
+    }
+
+    @Override
     public int compareTo(ImmutableCoordinate2D o) {
 
         Comparator<ImmutableCoordinate2D> yComp = Comparator.comparingInt(ImmutableCoordinate2D::getY).reversed();

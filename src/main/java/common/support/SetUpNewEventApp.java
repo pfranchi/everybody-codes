@@ -22,9 +22,9 @@ public class SetUpNewEventApp {
 
     private static void creaGenerale() throws IOException {
 
-        EventType type = EventType.STORY;
-        int year = 4;
-        int numberOfQuests = 3;
+        EventType type = EventType.MAIN_EVENT;
+        int year = 2026;
+        int numberOfQuests = 20;
 
         EventId eventId = new EventId(type, year);
 

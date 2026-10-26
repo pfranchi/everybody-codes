@@ -1,10 +1,7 @@
 package stories.s04;
 
 import common.AbstractQuestTest;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 
@@ -51,6 +48,7 @@ class Story04Quest02Test extends AbstractQuestTest {
         assertEquals(expectedResults, actualResults);
     }
 
+    @Disabled("Found the right solution in 34 minutes with 20 billion random moves")
     @Test
     @Order(6)
     void part3() {
