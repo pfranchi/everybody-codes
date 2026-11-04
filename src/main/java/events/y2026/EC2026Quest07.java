@@ -115,7 +115,7 @@ public class EC2026Quest07 extends AbstractQuest implements MainEvent2026, Quest
         Map<DestinationAndEnergy, Long> countsOfImpulsesByDestinationAndEnergy = new HashMap<>();
         countsOfImpulsesByDestinationAndEnergy.put(new DestinationAndEnergy(startingCloudId, startingImpulseStrength), 1L);
 
-        Set<Integer> explodedCloudIds = new HashSet<>();
+        Set<Integer> cloudIdsStillAlive = new HashSet<>(totalEnergyByCloudId.keySet());
 
         while (!countsOfImpulsesByDestinationAndEnergy.isEmpty()) {
 
@@ -124,56 +124,41 @@ public class EC2026Quest07 extends AbstractQuest implements MainEvent2026, Quest
             for (Map.Entry<DestinationAndEnergy, Long> entry: countsOfImpulsesByDestinationAndEnergy.entrySet()) {
                 int destinationCloudId = entry.getKey().destinationCloudId();
 
-                if (!explodedCloudIds.contains(destinationCloudId)) {
+                if (cloudIdsStillAlive.contains(destinationCloudId)) {
 
                     long impulseStrength = entry.getKey().impulseStrength();
                     long multiplicity = entry.getValue();
-
-                    long totalEnergyDelta = impulseStrength * multiplicity;
-
-                    long originalEnergy = totalEnergyByCloudId.get(destinationCloudId);
-                    long newTotalEnergy = originalEnergy + totalEnergyDelta;
-                    totalEnergyByCloudId.put(destinationCloudId, newTotalEnergy);
+                    totalEnergyByCloudId.merge(destinationCloudId, impulseStrength * multiplicity, Long::sum);
 
                     if (impulseStrength > 1) {
-                        for (int successorCloudId : graph.successors(destinationCloudId)) {
-
-                            if (!explodedCloudIds.contains(successorCloudId)) {
-                                nextImpulses.merge(new DestinationAndEnergy(successorCloudId, impulseStrength - 1), multiplicity, Long::sum);
-                            }
-                        }
+                        graph.successors(destinationCloudId)
+                                .stream()
+                                .mapToInt(successorCloudId -> successorCloudId)
+                                .filter(cloudIdsStillAlive::contains)
+                                .forEach(successorCloudId -> nextImpulses.merge(new DestinationAndEnergy(successorCloudId, impulseStrength - 1), multiplicity, Long::sum));
                     }
 
                 }
 
             }
 
-            boolean anyExplosion = totalEnergyByCloudId
-                    .entrySet()
-                    .stream()
-                    .filter(entry -> !explodedCloudIds.contains(entry.getKey()))
-                    .mapToLong(Map.Entry::getValue)
-                    .anyMatch(totalEnergy -> totalEnergy > explosionLimit);
+            // Explosions
 
-            if (anyExplosion) {
+            for (Map.Entry<Integer, Long> totalEnergyEntry: totalEnergyByCloudId.entrySet()) {
+                int explodingCloudId = totalEnergyEntry.getKey();
 
-                for (Map.Entry<Integer, Long> totalEnergyEntry: totalEnergyByCloudId.entrySet()) {
-                    int explodingCloudId = totalEnergyEntry.getKey();
+                if (cloudIdsStillAlive.contains(explodingCloudId)) {
 
-                    if (!explodedCloudIds.contains(explodingCloudId)) {
+                    long totalEnergy = totalEnergyEntry.getValue();
 
-                        long totalEnergy = totalEnergyEntry.getValue();
+                    if (totalEnergy > explosionLimit) {
+                        cloudIdsStillAlive.remove(explodingCloudId);
 
-                        if (totalEnergy > explosionLimit) {
-                            explodedCloudIds.add(explodingCloudId);
-
-                            for (int successorCloudId : graph.successors(explodingCloudId)) {
-                                if (!explodedCloudIds.contains(successorCloudId)) {
-                                    nextImpulses.merge(new DestinationAndEnergy(successorCloudId, 10L), 1L, Long::sum);
-                                }
-                            }
-
-                        }
+                        graph.successors(explodingCloudId)
+                                .stream()
+                                .mapToInt(successorCloudId -> successorCloudId)
+                                .filter(cloudIdsStillAlive::contains)
+                                .forEach(successorCloudId -> nextImpulses.merge(new DestinationAndEnergy(successorCloudId, 10L), 1L, Long::sum));
 
                     }
 
@@ -185,17 +170,11 @@ public class EC2026Quest07 extends AbstractQuest implements MainEvent2026, Quest
 
         }
 
-        long totalEnergy = 0L;
-        for (Map.Entry<Integer, Long> totalEnergyEntry: totalEnergyByCloudId.entrySet()) {
-            int cloudId = totalEnergyEntry.getKey();
-
-            if (!explodedCloudIds.contains(cloudId)) {
-                totalEnergy += totalEnergyEntry.getValue();
-            }
-
-        }
-
-        return totalEnergy;
+        return totalEnergyByCloudId.entrySet()
+                .stream()
+                .filter(totalEnergyEntry -> cloudIdsStillAlive.contains(totalEnergyEntry.getKey()))
+                .mapToLong(Map.Entry::getValue)
+                .sum();
     }
 
     private record DestinationAndEnergy(int destinationCloudId, long impulseStrength) {}
