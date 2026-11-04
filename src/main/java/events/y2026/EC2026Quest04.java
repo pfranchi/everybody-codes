@@ -144,9 +144,9 @@ public class EC2026Quest04 extends AbstractQuest implements MainEvent2026, Quest
 
             for (int part = 1; part <= 3; part++) {
 
-                // Participant ids and times, sorted by smallest time first
+                // Participant ids and times
 
-                PriorityQueue<ParticipantIdAndTime> participantIdAndTimes = new PriorityQueue<>();
+                List<ParticipantIdAndTime> participantIdAndTimes = new ArrayList<>();
 
                 for (Map.Entry<Key, Integer> entry: totalTimesBySolvedPart.entrySet()) {
 
@@ -161,6 +161,9 @@ public class EC2026Quest04 extends AbstractQuest implements MainEvent2026, Quest
 
                 }
 
+                // Sort the list, smallest time first
+                participantIdAndTimes.sort(Comparator.naturalOrder());
+
                 // Assign points
 
                 int currentlyAwardedTime = -1;
@@ -170,9 +173,7 @@ public class EC2026Quest04 extends AbstractQuest implements MainEvent2026, Quest
                 // Do not iterate over the priority queue because it is not fully sorted, it only guarantees
                 // that, at any moment, the head of the queue is the smallest element
 
-                while (!participantIdAndTimes.isEmpty()) {
-
-                    ParticipantIdAndTime participantIdAndTime = participantIdAndTimes.remove();
+                for (ParticipantIdAndTime participantIdAndTime: participantIdAndTimes) {
 
                     int currentParticipantId = participantIdAndTime.participantId();
                     int currentTime = participantIdAndTime.time();
