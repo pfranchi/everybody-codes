@@ -1,6 +1,7 @@
 package common.geo;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class MutableCell2D implements Cell2D {
 
@@ -69,6 +70,13 @@ public class MutableCell2D implements Cell2D {
         this.column += deltaColumn;
     }
 
+    @Override
+    public String toString() {
+        return new StringJoiner(", ",  "(", ")")
+                .add("r=" + row)
+                .add("c=" + column)
+                .toString();
+    }
 
 }
 
