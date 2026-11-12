@@ -18,43 +18,43 @@ class EC2026Quest13Test extends AbstractQuestTest {
     @Test
     @Order(1)
     void part1Examples() {
-        List<String> actualResults = solution.executeExamples(1);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> actualResults = solution.executeExamples(1, filename -> filename.startsWith("ex-"));
+        List<String> expectedResults = List.of("5", "7", "9");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(2)
     void part1() {
-        executeQuest(solution, 1, "Not implemented");
+        executeQuest(solution, 1, "27");
     }
 
     @Test
     @Order(3)
     void part2Examples() {
-        List<String> actualResults = solution.executeExamples(2);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> actualResults = solution.executeExamples(2, filename -> filename.startsWith("ex-"));
+        List<String> expectedResults = List.of("21", "135370");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(4)
     void part2() {
-        executeQuest(solution, 2, "Not implemented");
+        executeQuest(solution, 2, "137086");
     }
 
     @Test
     @Order(5)
     void part3Examples() {
         List<String> actualResults = solution.executeExamples(3);
-        List<String> expectedResults = List.of("Not implemented");
+        List<String> expectedResults = List.of("984329851511");
         assertEquals(expectedResults, actualResults);
     }
 
     @Test
     @Order(6)
     void part3() {
-        executeQuest(solution, 3, "Not implemented");
+        executeQuest(solution, 3, "1283004579090");
     }
 
 
